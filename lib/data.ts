@@ -68,13 +68,13 @@ export const BADGES = [7, 30, 100, 365];
 // screens. Inspired by dawn / dusk gradients (teal, amber, indigo, moss).
 export type Mood = { from: string; to: string; accent: string };
 export const ADHKAR_MOODS: Mood[] = [
-  { from: "#0f1f1a", to: "#0a0a0b", accent: "#16A34A" }, // deep emerald
-  { from: "#1a1608", to: "#0a0a0b", accent: "#C8A75D" }, // amber dusk
-  { from: "#0a1620", to: "#0a0a0b", accent: "#3b82a6" }, // dawn teal
-  { from: "#1a0f1c", to: "#0a0a0b", accent: "#a366c8" }, // soft plum
-  { from: "#1c1006", to: "#0a0a0b", accent: "#d68a4c" }, // ember
-  { from: "#0a1a14", to: "#0a0a0b", accent: "#4ca67e" }, // moss
-  { from: "#141222", to: "#0a0a0b", accent: "#6b7fd6" }, // indigo
+  { from: "#1e5c40", to: "#0a0a0b", accent: "#2fe08a" }, // emerald
+  { from: "#6b4a14", to: "#0a0a0b", accent: "#f0b64a" }, // amber dusk
+  { from: "#134f6e", to: "#0a0a0b", accent: "#4fc3e8" }, // dawn teal
+  { from: "#5a2264", to: "#0a0a0b", accent: "#d688f0" }, // soft plum
+  { from: "#6e3208", to: "#0a0a0b", accent: "#f2925a" }, // ember
+  { from: "#1c6b3a", to: "#0a0a0b", accent: "#6fe0a0" }, // moss
+  { from: "#2b2470", to: "#0a0a0b", accent: "#8f9bf5" }, // indigo
 ];
 
 export function moodFor(index: number): Mood {

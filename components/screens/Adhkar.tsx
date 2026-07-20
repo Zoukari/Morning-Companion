@@ -88,12 +88,17 @@ export default function Adhkar({
     <div style={{ minHeight: "100vh", position: "relative", overflow: "hidden" }}>
       <div style={{
         position: "absolute", inset: 0, zIndex: 0,
-        background: `radial-gradient(circle at 30% 15%, ${mood.from} 0%, var(--bg) 65%)`,
+        background: `linear-gradient(155deg, ${mood.from} 0%, var(--bg) 78%)`,
         transition: "background 0.9s ease",
       }} />
       <div style={{
-        position: "absolute", top: "-8%", right: "-12%", width: 220, height: 220, borderRadius: "50%",
-        background: mood.accent, opacity: 0.16, filter: "blur(70px)", zIndex: 0,
+        position: "absolute", top: "-10%", right: "-15%", width: 320, height: 320, borderRadius: "50%",
+        background: mood.accent, opacity: 0.35, filter: "blur(90px)", zIndex: 0,
+        transition: "background 0.9s ease",
+      }} />
+      <div style={{
+        position: "absolute", bottom: "-15%", left: "-15%", width: 260, height: 260, borderRadius: "50%",
+        background: mood.from, opacity: 0.5, filter: "blur(80px)", zIndex: 0,
         transition: "background 0.9s ease",
       }} />
 

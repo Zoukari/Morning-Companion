@@ -14,7 +14,7 @@ export const Toggle = ({ on, onChange }: { on: boolean; onChange: (v: boolean) =
     className="mc-toggle"
     style={{
       width: 46, height: 26, borderRadius: 999, border: "none", cursor: "pointer",
-      background: on ? "#16A34A" : "rgba(255,255,255,0.12)", position: "relative", padding: 0,
+      background: on ? "var(--emerald)" : "var(--track-strong)", position: "relative", padding: 0,
     }}
   >
     <div className="mc-toggle-knob" style={{
@@ -26,7 +26,7 @@ export const Toggle = ({ on, onChange }: { on: boolean; onChange: (v: boolean) =
 
 export const Confetti = () => {
   const pieces = Array.from({ length: 26 });
-  const colors = ["#16A34A", "#C8A75D", "#f3f2ee"];
+  const colors = ["var(--emerald)", "var(--gold)", "var(--text)"];
   return (
     <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 50 }}>
       {pieces.map((_, i) => (
@@ -48,11 +48,11 @@ export const AtmosphereBackground = ({ variant = "home" }: { variant?: "home" | 
     <div className="mc-dawn-beam" style={variant === "splash" ? { opacity: 0.9 } : { opacity: 0.55 }} />
     <div className="mc-streaks" />
     <div className="mc-orb" style={{
-      width: 260, height: 260, background: "#16A34A",
+      width: 260, height: 260, background: "var(--emerald)",
       top: variant === "splash" ? "20%" : "-6%", left: "-10%",
     }} />
     <div className="mc-orb" style={{
-      width: 220, height: 220, background: "#C8A75D",
+      width: 220, height: 220, background: "var(--gold)",
       top: variant === "splash" ? "45%" : "60%", right: "-8%",
       animationDelay: "2s",
     }} />
@@ -64,12 +64,12 @@ export const TopBar = ({ title, onBack, right }: { title: string; onBack?: () =>
   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "18px 20px 10px", position: "relative", zIndex: 1 }}>
     <div style={{ width: 32 }}>
       {onBack && (
-        <button onClick={onBack} className="mc-btn" style={{ background: "none", border: "none", color: "#93938e", cursor: "pointer", padding: 6 }}>
+        <button onClick={onBack} className="mc-btn" style={{ background: "none", border: "none", color: "var(--text-dim)", cursor: "pointer", padding: 6 }}>
           <ChevronLeft size={22} />
         </button>
       )}
     </div>
-    <div style={{ fontSize: 13, letterSpacing: 1.5, color: "#93938e", textTransform: "uppercase" }}>{title}</div>
+    <div style={{ fontSize: 13, letterSpacing: 1.5, color: "var(--text-dim)", textTransform: "uppercase" }}>{title}</div>
     <div style={{ width: 32, display: "flex", justifyContent: "flex-end" }}>{right}</div>
   </div>
 );

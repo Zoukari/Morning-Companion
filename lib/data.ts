@@ -64,6 +64,23 @@ export const QUOTES = [
 
 export const BADGES = [7, 30, 100, 365];
 
+// One mood per adhkar screen — cycles through, transitions smoothly between
+// screens. Inspired by dawn / dusk gradients (teal, amber, indigo, moss).
+export type Mood = { from: string; to: string; accent: string };
+export const ADHKAR_MOODS: Mood[] = [
+  { from: "#0f1f1a", to: "#0a0a0b", accent: "#16A34A" }, // deep emerald
+  { from: "#1a1608", to: "#0a0a0b", accent: "#C8A75D" }, // amber dusk
+  { from: "#0a1620", to: "#0a0a0b", accent: "#3b82a6" }, // dawn teal
+  { from: "#1a0f1c", to: "#0a0a0b", accent: "#a366c8" }, // soft plum
+  { from: "#1c1006", to: "#0a0a0b", accent: "#d68a4c" }, // ember
+  { from: "#0a1a14", to: "#0a0a0b", accent: "#4ca67e" }, // moss
+  { from: "#141222", to: "#0a0a0b", accent: "#6b7fd6" }, // indigo
+];
+
+export function moodFor(index: number): Mood {
+  return ADHKAR_MOODS[index % ADHKAR_MOODS.length];
+}
+
 export function levelForDays(n: number) {
   if (n >= 365) return "Sâlih";
   if (n >= 100) return "Mouhsin";

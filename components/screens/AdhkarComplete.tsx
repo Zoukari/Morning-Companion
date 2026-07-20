@@ -8,14 +8,14 @@ export default function AdhkarComplete({ onContinue }: { onContinue: () => void 
       <Confetti />
       <AtmosphereBackground />
       <div style={{ position: "relative", zIndex: 1, textAlign: "center", padding: 30 }}>
-        <div className="font-arabic" style={{ fontSize: 30, color: "#C8A75D", marginBottom: 16 }}>الحمد لله</div>
+        <div className="font-arabic" style={{ fontSize: 30, color: "var(--gold)", marginBottom: 16 }}>الحمد لله</div>
         <div className="font-display" style={{ fontSize: 22, lineHeight: 1.5 }}>Tes adhkar du matin sont terminés.</div>
-        <div style={{ marginTop: 10, fontSize: 13, color: "#93938e", lineHeight: 1.6, maxWidth: 300 }}>
+        <div style={{ marginTop: 10, fontSize: 13, color: "var(--text-dim)", lineHeight: 1.6, maxWidth: 300 }}>
           Qu&apos;Allah accepte tes invocations et mette la baraka dans ta journée.
         </div>
         <button onClick={onContinue} className="mc-btn mc-scale-tap" style={{
           marginTop: 34, padding: "16px 36px", borderRadius: 16, border: "none",
-          background: "linear-gradient(135deg, #16A34A, #0f7a37)", color: "#fff",
+          background: "linear-gradient(135deg, var(--emerald), #0f7a37)", color: "#fff",
           fontSize: 15, fontWeight: 600, cursor: "pointer",
         }}>
           Continuer vers la routine

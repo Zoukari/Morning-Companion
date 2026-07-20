@@ -15,6 +15,7 @@ export type Settings = {
   notifications: boolean;
   strictMode: boolean;
   soundCounter: boolean;
+  theme: "dark" | "light";
 };
 
 export type AppData = {
@@ -39,6 +40,13 @@ export const defaultDay = (): DayData => ({
   reflection: null,
 });
 
+export const resetAdhkarOnly = (day: DayData): DayData => ({
+  ...day,
+  adhkarIndex: 0,
+  adhkarRepCounts: {},
+  adhkarCompleted: false,
+});
+
 export const defaultApp = (): AppData => ({
   streak: 0,
   lastCompletedDate: null,
@@ -50,6 +58,7 @@ export const defaultApp = (): AppData => ({
     notifications: true,
     strictMode: false,
     soundCounter: true,
+    theme: "dark",
   },
   days: { [todayKey()]: defaultDay() },
 });

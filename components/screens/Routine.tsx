@@ -41,27 +41,27 @@ export default function Routine({
               <button key={t.id} onClick={() => toggle(t.id)} className="mc-btn" style={{
                 display: "flex", alignItems: "center", gap: 14, padding: "16px 16px", borderRadius: 16,
                 border: `1px solid ${done ? "var(--emerald-line)" : "var(--border)"}`,
-                background: done ? "var(--emerald-soft)" : "#1b1b1f",
+                background: done ? "var(--emerald-soft)" : "var(--card)",
                 cursor: "pointer", textAlign: "left", width: "100%", transition: "background 0.2s ease, border-color 0.2s ease",
               }}>
                 <div style={{
                   width: 24, height: 24, borderRadius: 8, flexShrink: 0,
-                  border: `1.5px solid ${done ? "#16A34A" : "#55555a"}`,
-                  background: done ? "#16A34A" : "transparent",
+                  border: `1.5px solid ${done ? "var(--emerald)" : "var(--text-faint)"}`,
+                  background: done ? "var(--emerald)" : "transparent",
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
                   {done && <Check size={15} color="#fff" />}
                 </div>
-                <Icon size={17} color={done ? "#16A34A" : "#93938e"} />
-                <span style={{ fontSize: 14, color: done ? "#f3f2ee" : "#93938e" }}>{t.label}</span>
+                <Icon size={17} color={done ? "var(--emerald)" : "var(--text-dim)"} />
+                <span style={{ fontSize: 14, color: done ? "var(--text)" : "var(--text-dim)" }}>{t.label}</span>
               </button>
             );
           })}
         </div>
         <button disabled={!allDone} onClick={onDone} className="mc-btn mc-scale-tap" style={{
           marginTop: 26, width: "100%", padding: "17px", borderRadius: 16, border: "none",
-          background: allDone ? "linear-gradient(135deg, #16A34A, #0f7a37)" : "rgba(255,255,255,0.06)",
-          color: allDone ? "#fff" : "#55555a",
+          background: allDone ? "linear-gradient(135deg, var(--emerald), #0f7a37)" : "var(--track)",
+          color: allDone ? "#fff" : "var(--text-faint)",
           fontSize: 15, fontWeight: 600, cursor: allDone ? "pointer" : "not-allowed",
         }}>
           Terminer la routine

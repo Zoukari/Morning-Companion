@@ -50,7 +50,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr">
+    <html lang="fr" data-theme="dark">
       <body className={`${inter.variable} ${fraunces.variable} ${amiri.variable} font-sans`}>
         {children}
       </body>

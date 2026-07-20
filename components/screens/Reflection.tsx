@@ -28,7 +28,7 @@ export default function Reflection({
         <div style={{ display: "flex", gap: 8, marginBottom: 26 }}>
           {[1, 2, 3, 4, 5].map(n => (
             <button key={n} onClick={() => setRating(n)} style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>
-              <Star size={30} fill={n <= rating ? "#C8A75D" : "none"} color="#C8A75D" strokeWidth={1.5} />
+              <Star size={30} fill={n <= rating ? "var(--gold)" : "none"} color="var(--gold)" strokeWidth={1.5} />
             </button>
           ))}
         </div>
@@ -36,17 +36,17 @@ export default function Reflection({
         {day.dailyGoal && (
           <>
             <div className="font-display" style={{ fontSize: 19, marginBottom: 12 }}>As-tu accompli ton objectif ?</div>
-            <div style={{ fontSize: 13, color: "#93938e", marginBottom: 12 }}>« {day.dailyGoal} »</div>
+            <div style={{ fontSize: 13, color: "var(--text-dim)", marginBottom: 12 }}>« {day.dailyGoal} »</div>
             <div style={{ display: "flex", gap: 10, marginBottom: 20 }}>
               <button onClick={() => setAchieved(true)} className="mc-btn" style={{
                 flex: 1, padding: 14, borderRadius: 14, cursor: "pointer",
                 border: `1px solid ${achieved === true ? "var(--emerald-line)" : "var(--border)"}`,
-                background: achieved === true ? "var(--emerald-soft)" : "#1b1b1f", color: "#f3f2ee",
+                background: achieved === true ? "var(--emerald-soft)" : "var(--card)", color: "var(--text)",
               }}>Oui</button>
               <button onClick={() => setAchieved(false)} className="mc-btn" style={{
                 flex: 1, padding: 14, borderRadius: 14, cursor: "pointer",
                 border: `1px solid ${achieved === false ? "rgba(200,120,93,0.4)" : "var(--border)"}`,
-                background: achieved === false ? "rgba(200,80,60,0.12)" : "#1b1b1f", color: "#f3f2ee",
+                background: achieved === false ? "rgba(200,80,60,0.12)" : "var(--card)", color: "var(--text)",
               }}>Non</button>
             </div>
           </>
@@ -58,13 +58,13 @@ export default function Reflection({
             placeholder="Pourquoi ?"
             rows={3}
             className="mc-card"
-            style={{ width: "100%", borderRadius: 14, padding: 14, color: "#f3f2ee", outline: "none", resize: "none", fontFamily: "inherit", fontSize: 14, marginBottom: 20 }}
+            style={{ width: "100%", borderRadius: 14, padding: 14, color: "var(--text)", outline: "none", resize: "none", fontFamily: "inherit", fontSize: 14, marginBottom: 20 }}
           />
         )}
 
         <button onClick={save} className="mc-btn mc-scale-tap" style={{
           width: "100%", padding: "16px", borderRadius: 16, border: "none",
-          background: "linear-gradient(135deg, #16A34A, #0f7a37)", color: "#fff",
+          background: "linear-gradient(135deg, var(--emerald), #0f7a37)", color: "#fff",
           fontSize: 15, fontWeight: 600, cursor: "pointer",
         }}>
           Enregistrer le bilan

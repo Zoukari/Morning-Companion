@@ -29,20 +29,20 @@ export default function Home({
       <TopBar
         title=""
         right={
-          <button onClick={onOpenSettings} className="mc-btn" style={{ background: "none", border: "none", color: "#93938e", cursor: "pointer" }}>
+          <button onClick={onOpenSettings} className="mc-btn" style={{ background: "none", border: "none", color: "var(--text-dim)", cursor: "pointer" }}>
             <SettingsIcon size={20} />
           </button>
         }
       />
       <div style={{ position: "relative", zIndex: 1, padding: "10px 24px" }}>
-        <div className="font-arabic" dir="rtl" style={{ fontSize: 26, color: "#C8A75D", marginBottom: 6, textAlign: "right" }}>
+        <div className="font-arabic" dir="rtl" style={{ fontSize: 26, color: "var(--gold)", marginBottom: 6, textAlign: "right" }}>
           السلام عليكم ورحمة الله وبركاته
         </div>
         <div className="font-display" style={{ fontSize: 24, marginTop: 18, lineHeight: 1.3 }}>
           Aujourd&apos;hui est une nouvelle occasion<br />de se rapprocher d&apos;Allah.
         </div>
 
-        <div style={{ display: "flex", gap: 10, marginTop: 24, fontSize: 13, color: "#93938e" }}>
+        <div style={{ display: "flex", gap: 10, marginTop: 24, fontSize: 13, color: "var(--text-dim)" }}>
           <span style={{ textTransform: "capitalize" }}>{dateStr}</span>
           <span>·</span>
           <span>{timeStr}</span>
@@ -50,28 +50,28 @@ export default function Home({
 
         <div className="mc-card" style={{ marginTop: 28, borderRadius: 20, padding: 22 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-            <span style={{ fontSize: 13, color: "#93938e" }}>Progression du jour</span>
-            <span className="font-display" style={{ fontSize: 20, color: "#16A34A" }}>{pct}%</span>
+            <span style={{ fontSize: 13, color: "var(--text-dim)" }}>Progression du jour</span>
+            <span className="font-display" style={{ fontSize: 20, color: "var(--emerald)" }}>{pct}%</span>
           </div>
           <ProgressBar pct={pct} />
-          <div style={{ display: "flex", gap: 18, marginTop: 16, fontSize: 12, color: "#93938e" }}>
+          <div style={{ display: "flex", gap: 18, marginTop: 16, fontSize: 12, color: "var(--text-dim)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-              <Check size={13} color={day.adhkarCompleted ? "#16A34A" : "#55555a"} /> Adhkar
+              <Check size={13} color={day.adhkarCompleted ? "var(--emerald)" : "var(--text-faint)"} /> Adhkar
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-              <Check size={13} color={day.routineCompleted ? "#16A34A" : "#55555a"} /> Routine
+              <Check size={13} color={day.routineCompleted ? "var(--emerald)" : "var(--text-faint)"} /> Routine
             </div>
           </div>
         </div>
 
-        <div style={{ marginTop: 18, fontSize: 13, color: "#93938e", fontStyle: "italic", lineHeight: 1.5, padding: "0 4px" }}>
+        <div style={{ marginTop: 18, fontSize: 13, color: "var(--text-dim)", fontStyle: "italic", lineHeight: 1.5, padding: "0 4px" }}>
           « {quote.text} »
-          <div style={{ marginTop: 4, fontSize: 11, color: "#55555a" }}>— {quote.source}</div>
+          <div style={{ marginTop: 4, fontSize: 11, color: "var(--text-faint)" }}>— {quote.source}</div>
         </div>
 
         <button onClick={onStart} className="mc-btn mc-scale-tap" style={{
           marginTop: 30, width: "100%", padding: "17px", borderRadius: 16, border: "none",
-          background: "linear-gradient(135deg, #16A34A, #0f7a37)", color: "#fff",
+          background: "linear-gradient(135deg, var(--emerald), #0f7a37)", color: "#fff",
           fontSize: 15, fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
         }}>
           {cta} <ArrowRight size={17} />
@@ -79,7 +79,7 @@ export default function Home({
 
         <button onClick={onOpenDashboard} className="mc-btn" style={{
           marginTop: 14, width: "100%", padding: "13px", borderRadius: 16, border: "1px solid var(--border)",
-          background: "transparent", color: "#93938e", fontSize: 13, cursor: "pointer",
+          background: "transparent", color: "var(--text-dim)", fontSize: 13, cursor: "pointer",
           display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
         }}>
           <BarChart3 size={15} /> Tableau de bord · série de {app.streak} jour{app.streak > 1 ? "s" : ""}

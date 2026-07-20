@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { AppData, DayData, defaultDay, todayKey } from "@/lib/types";
+import { AppData, DayData, defaultDay, resetAdhkarOnly, todayKey } from "@/lib/types";
 import { loadAppData, saveAppData } from "@/lib/storage";
 import { scheduleDailyReminder, cancelDailyReminder } from "@/lib/notifications";
 
@@ -74,6 +74,15 @@ export default function Page() {
     }
   }, [app?.settings.notifications, app?.settings.notifTime]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // apply dark/light theme to <html>, and keep the browser chrome color in sync
+  useEffect(() => {
+    if (!app) return;
+    const theme = app.settings.theme;
+    document.documentElement.setAttribute("data-theme", theme);
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", theme === "light" ? "#faf9f6" : "#0a0a0b");
+  }, [app?.settings.theme]);
+
   const setDay = useCallback((updater: (d: DayData) => DayData) => {
     setApp(a => {
       if (!a) return a;
@@ -99,6 +108,10 @@ export default function Page() {
       return { ...a, streak: newStreak, lastCompletedDate: key, totalDaysCompleted: a.totalDaysCompleted + 1, weightHistory };
     });
   }, []);
+
+  const resetTodayAdhkar = useCallback(() => {
+    setDay(d => resetAdhkarOnly(d));
+  }, [setDay]);
 
   if (showSplash || !app) return <Splash />;
 
@@ -137,7 +150,7 @@ export default function Page() {
     case "reflection":
       return <Reflection day={day} setDay={setDay} onExit={() => setScreen("dashboard")} />;
     case "settings":
-      return <SettingsScreen app={app} setApp={setApp as any} onExit={() => setScreen("home")} />;
+      return <SettingsScreen app={app} setApp={setApp as any} onExit={() => setScreen("home")} onResetTodayAdhkar={resetTodayAdhkar} />;
     default:
       return null;
   }

@@ -11,8 +11,11 @@ export type DayData = {
 
 export type Settings = {
   language: "fr" | "en" | "ar";
-  notifTime: string;
+  notifWindowStart: string;
+  notifWindowEnd: string;
+  timeZone: string;
   notifications: boolean;
+  pushEnabled: boolean;
   strictMode: boolean;
   soundCounter: boolean;
   theme: "dark" | "light";
@@ -54,8 +57,11 @@ export const defaultApp = (): AppData => ({
   weightHistory: [],
   settings: {
     language: "fr",
-    notifTime: "05:30",
+    notifWindowStart: "05:00",
+    notifWindowEnd: "06:30",
+    timeZone: "",
     notifications: true,
+    pushEnabled: false,
     strictMode: false,
     soundCounter: true,
     theme: "dark",

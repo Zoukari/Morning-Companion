@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { AppData, DayData, defaultDay, resetAdhkarOnly, todayKey } from "@/lib/types";
 import { loadAppData, saveAppData } from "@/lib/storage";
-import { scheduleDailyReminder, cancelDailyReminder } from "@/lib/notifications";
+import { detectTimeZone, syncReminderState } from "@/lib/push";
 
 import Splash from "@/components/screens/Splash";
 import Home from "@/components/screens/Home";
@@ -61,18 +61,36 @@ export default function Page() {
     return () => { if (saveTimer.current) clearTimeout(saveTimer.current); };
   }, [app, booted]);
 
-  // notification scheduling
+  // detect the device's time zone once, if not already set
   useEffect(() => {
     if (!app) return;
-    if (app.settings.notifications) {
-      scheduleDailyReminder(app.settings.notifTime, () => {
-        const day = app.days[todayKey()];
-        return !!day?.adhkarCompleted;
-      });
-    } else {
-      cancelDailyReminder();
+    if (!app.settings.timeZone) {
+      const tz = detectTimeZone();
+      setApp(a => (a ? { ...a, settings: { ...a.settings, timeZone: tz } } : a));
     }
-  }, [app?.settings.notifications, app?.settings.notifTime]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [app?.settings.timeZone]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // keep the server's reminder state (window + today's completion) in sync so the
+  // cron job knows whether/when to send a push — this is what makes the reminder
+  // work even when the PWA is fully closed.
+  useEffect(() => {
+    if (!app || !app.settings.notifications || !app.settings.timeZone) return;
+    const key = todayKey();
+    const day = app.days[key] || defaultDay();
+    syncReminderState({
+      windowStart: app.settings.notifWindowStart,
+      windowEnd: app.settings.notifWindowEnd,
+      timeZone: app.settings.timeZone,
+      completedToday: !!day.adhkarCompleted,
+      dateKey: key,
+    });
+  }, [
+    app?.settings.notifications,
+    app?.settings.notifWindowStart,
+    app?.settings.notifWindowEnd,
+    app?.settings.timeZone,
+    app?.days[todayKey()]?.adhkarCompleted,
+  ]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // apply dark/light theme to <html>, and keep the browser chrome color in sync
   useEffect(() => {

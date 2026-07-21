@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
-import { Bell, BellOff, Clock, ShieldCheck, Volume2, VolumeX, Globe, Sun, Moon, RotateCcw } from "lucide-react";
+import { Bell, BellOff, Clock, ShieldCheck, Volume2, VolumeX, Globe, Sun, Moon, RotateCcw, Zap } from "lucide-react";
 import { AppData, Settings as SettingsType } from "@/lib/types";
-import { requestNotificationPermission } from "@/lib/notifications";
+import { enablePush } from "@/lib/push";
 import { Toggle, TopBar } from "../ui";
 
 export default function SettingsScreen({
@@ -15,14 +15,23 @@ export default function SettingsScreen({
 }) {
   const s = app.settings;
   const [confirmReset, setConfirmReset] = React.useState(false);
+  const [pushStatus, setPushStatus] = React.useState<"idle" | "working" | "error">("idle");
   const upd = (patch: Partial<SettingsType>) => setApp(a => ({ ...a, settings: { ...a.settings, ...patch } }));
 
   const handleNotifToggle = async (v: boolean) => {
-    if (v) {
-      const granted = await requestNotificationPermission();
-      upd({ notifications: granted });
-    } else {
-      upd({ notifications: false });
+    upd({ notifications: v });
+    if (!v) return;
+    if (!s.pushEnabled) {
+      setPushStatus("working");
+      const result = await enablePush();
+      if (result.ok) {
+        upd({ pushEnabled: true });
+        setPushStatus("idle");
+      } else {
+        upd({ notifications: false });
+        setPushStatus("error");
+        setTimeout(() => setPushStatus("idle"), 3000);
+      }
     }
   };
 
@@ -66,20 +75,31 @@ export default function SettingsScreen({
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             {s.notifications ? <Bell size={17} color="var(--emerald)" /> : <BellOff size={17} color="var(--text-faint)" />}
             <div>
-              <div style={{ fontSize: 14 }}>Notifications</div>
-              <div style={{ fontSize: 11, color: "var(--text-faint)" }}>Rappel quotidien tant que l&apos;app est ouverte</div>
+              <div style={{ fontSize: 14 }}>Notifications push</div>
+              <div style={{ fontSize: 11, color: "var(--text-faint)" }}>
+                {pushStatus === "working" ? "Activation en cours…" : pushStatus === "error" ? "Refusé ou indisponible" : "Arrivent même app fermée"}
+              </div>
             </div>
           </div>
           <Toggle on={s.notifications} onChange={handleNotifToggle} />
         </div>
 
-        <div className="mc-card" style={{ borderRadius: 16, padding: 16, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <div className="mc-card" style={{ borderRadius: 16, padding: 16 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
             <Clock size={17} color="var(--text-dim)" />
-            <div style={{ fontSize: 14 }}>Heure de rappel</div>
+            <div style={{ fontSize: 14 }}>Plage de rappel</div>
           </div>
-          <input type="time" value={s.notifTime} onChange={e => upd({ notifTime: e.target.value })}
-            style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", borderRadius: 8, color: "var(--text)", padding: "6px 8px", fontSize: 13 }} />
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <input type="time" value={s.notifWindowStart} onChange={e => upd({ notifWindowStart: e.target.value })}
+              style={{ flex: 1, background: "var(--bg-elevated)", border: "1px solid var(--border)", borderRadius: 8, color: "var(--text)", padding: "8px 8px", fontSize: 13 }} />
+            <span style={{ color: "var(--text-faint)", fontSize: 12 }}>à</span>
+            <input type="time" value={s.notifWindowEnd} onChange={e => upd({ notifWindowEnd: e.target.value })}
+              style={{ flex: 1, background: "var(--bg-elevated)", border: "1px solid var(--border)", borderRadius: 8, color: "var(--text)", padding: "8px 8px", fontSize: 13 }} />
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 10, fontSize: 11, color: "var(--text-faint)" }}>
+            <Zap size={12} />
+            Si tu n&apos;ouvres pas l&apos;app, la notif revient toutes les 20 min dans cette plage jusqu&apos;à ce que tu fasses tes adhkar
+          </div>
         </div>
 
         <div className="mc-card" style={{ borderRadius: 16, padding: 16, display: "flex", justifyContent: "space-between", alignItems: "center" }}>

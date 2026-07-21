@@ -57,34 +57,82 @@ l'app cible ni bloquer son lancement — elle ouvre juste Morning Companion
 par-dessus. L'utilisateur doit encore appuyer sur "Retour" pour revenir à
 l'app initiale. C'est une limite d'iOS, pas de cette app.
 
-## 4. Notifications
+## 4. Notifications push (réelles, même app fermée)
 
-Les notifications sont **locales et best-effort** : elles ne se déclenchent
-que si l'app/PWA est ouverte en arrière-plan (onglet ou fenêtre standalone).
-iOS ne permet pas de réveiller une PWA fermée sans un vrai serveur de push
-(VAPID + service worker push). Pour aller plus loin :
+Contrairement à une v1 "best-effort" (qui ne marche que si l'app est ouverte),
+celle-ci envoie de vraies notifications Web Push via un petit backend, et
+relance toutes les 20 min dans ta plage horaire jusqu'à ce que tu ouvres
+l'app et fasses tes adhkar.
 
-- Héberger un petit backend (ex. Vercel Edge Function) qui envoie des push
-  Web Push signés VAPID à l'heure choisie.
-- Ou utiliser un vrai calcul d'horaire de Fajr (API comme Aladhan) au lieu
-  d'une heure fixe dans les réglages.
+**Comment ça marche :** Vercel Hobby ne peut déclencher un cron qu'une fois
+par jour (et de façon imprécise). On contourne ça avec une **GitHub Action
+gratuite** qui ping une route API toutes les 10 min ; cette route décide
+elle-même si elle doit envoyer un push (dans la plage horaire ? adhkar pas
+encore faits ? pas déjà notifié récemment ?).
 
-Ces deux points ne sont pas branchés dans cette v1 pour rester simple et
-100% gratuit à héberger, mais l'architecture (settings.notifTime,
-`lib/notifications.ts`) est prête à les recevoir.
+**Mise en place (une seule fois) :**
+
+1. **Générer les clés VAPID** (chez toi, pas dans un chat) :
+   ```bash
+   npx web-push generate-vapid-keys
+   ```
+   Ça donne une clé publique et une clé privée.
+
+2. **Créer une base Redis sur Vercel** (gratuit, via Upstash) : Dashboard
+   Vercel → ton projet → **Storage** → **Create Database** → **Redis**.
+   Vercel connecte automatiquement les variables d'environnement
+   (`UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`).
+
+3. **Ajouter les variables d'environnement** sur Vercel (Project → Settings →
+   Environment Variables) :
+   - `NEXT_PUBLIC_VAPID_PUBLIC_KEY` → la clé publique de l'étape 1
+   - `VAPID_PRIVATE_KEY` → la clé privée de l'étape 1
+   - `CRON_SECRET` → une chaîne aléatoire longue (`openssl rand -hex 32`)
+
+4. **Redéployer** (`git push` suffit, Vercel redéploie tout seul).
+
+5. **Ajouter deux secrets sur GitHub** (repo → Settings → Secrets and
+   variables → Actions → New repository secret) :
+   - `CRON_SECRET` → exactement la même valeur que sur Vercel
+   - `APP_URL` → ton URL Vercel, ex. `https://morning-companion.vercel.app`
+     (sans `/` à la fin)
+
+6. Le fichier `.github/workflows/reminder.yml` est déjà prêt — dès qu'il est
+   sur GitHub, l'Action se déclenche automatiquement toutes les 10 min. Tu
+   peux la lancer manuellement depuis l'onglet **Actions** → **Run workflow**
+   pour tester tout de suite sans attendre.
+
+7. Dans l'app, va dans **Réglages → Notifications push**, active le toggle
+   (ça demande la permission iOS et enregistre ton appareil), puis règle ta
+   **plage de rappel** (par défaut 05:00–06:30).
+
+**Limites à connaître :**
+- Sur iPhone, les push web n'existent que depuis iOS 16.4, et **uniquement
+  si l'app est installée sur l'écran d'accueil** (pas juste un onglet Safari).
+- GitHub peut retarder une Action de quelques minutes si le repo est peu
+  actif — sans conséquence ici puisqu'on retente toutes les 10 min.
+- Un seul appareil abonné à la fois dans cette v1 (stockage simple pour un
+  usage personnel). Si tu réinstalles l'app sur un nouvel iPhone, réactive
+  juste le toggle — ça remplace l'abonnement précédent.
 
 ## 5. Structure du projet
 
 ```
 app/                  routes Next.js (App Router), une seule page qui gère
                       tout le flux (state machine côté client)
+app/api/subscribe/    enregistre l'abonnement push de l'appareil
+app/api/sync/         reçoit la plage horaire + statut du jour côté client
+app/api/cron/reminder/ décide d'envoyer un push (appelée par GitHub Actions)
 components/screens/   un composant par écran (Home, Adhkar, Routine, ...)
 components/ui.tsx      primitives UI partagées (ProgressBar, Toggle, ...)
 lib/data.ts           adhkar, checklist, citations — à éditer pour changer
                        le contenu sans toucher au reste du code
 lib/types.ts           types + valeurs par défaut de l'état sauvegardé
 lib/storage.ts         persistance offline via IndexedDB (idb-keyval)
-lib/notifications.ts    rappel local quotidien (best-effort)
+lib/push.ts             abonnement push + sync côté client
+lib/pushServer.ts       stockage KV + envoi web-push côté serveur
+worker/index.js         code du service worker (push, clic sur la notif)
+.github/workflows/      la GitHub Action qui déclenche le cron toutes les 10 min
 public/manifest.json   manifeste PWA
 public/icons/           icônes (croissant doré généré)
 public/fonts/           Inter / Fraunces / Amiri auto-hébergées (woff2)

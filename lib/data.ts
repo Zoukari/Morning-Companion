@@ -38,6 +38,8 @@ export const ADHKAR: AdhkarItem[] = [
     arabic: "اللهم إن كان رزقي في السماء فأنزله وإن كان في الأرض فأخرجه وإن كان قليلاً فكثره وإن كان كثيراً فبارك لي فيه وإن كان بعيداً فقربه وإن كان قريباً فيسره" },
   { id: "tawakkul-5", title: "Tawakkul (5/5)", repetitions: 1,
     arabic: "اللهم سخر لي ملائكة السماء وجنود الأرض واجعل أمري كله يسيراً وتوكلت عليك" },
+  { id: "hadith-hayat-wafat", title: "Ne pas souhaiter la mort", repetitions: 1,
+    arabic: "اللَّهُمَّ أَحْيِنِي مَا كَانَتِ الْحَيَاةُ خَيْرًا لِي، وَتَوَفَّنِي إِذَا كَانَتِ الْوَفَاةُ خَيْرًا لِي" },
   { id: "tahlil-100", title: "Tahlil", repetitions: 100, isCounter: true,
     arabic: "لا إله إلا الله وحده لا شريك له له الملك وله الحمد وهو على كل شيء قدير" },
 ];
@@ -64,21 +66,26 @@ export const QUOTES = [
 
 export const BADGES = [7, 30, 100, 365];
 
-// One mood per adhkar screen — cycles through, transitions smoothly between
-// screens. Inspired by dawn / dusk gradients (teal, amber, indigo, moss).
-export type Mood = { from: string; to: string; accent: string };
-export const ADHKAR_MOODS: Mood[] = [
-  { from: "#1e5c40", to: "#0a0a0b", accent: "#2fe08a" }, // emerald
-  { from: "#6b4a14", to: "#0a0a0b", accent: "#f0b64a" }, // amber dusk
-  { from: "#134f6e", to: "#0a0a0b", accent: "#4fc3e8" }, // dawn teal
-  { from: "#5a2264", to: "#0a0a0b", accent: "#d688f0" }, // soft plum
-  { from: "#6e3208", to: "#0a0a0b", accent: "#f2925a" }, // ember
-  { from: "#1c6b3a", to: "#0a0a0b", accent: "#6fe0a0" }, // moss
-  { from: "#2b2470", to: "#0a0a0b", accent: "#8f9bf5" }, // indigo
+// The user's own reference photos, used as-is (no color extraction, no filters).
+// Split into 6 groups; one group is used per calendar day, cycling through it
+// photo-per-adhkar within that day.
+export const BACKGROUND_SETS: string[][] = [
+  ["/backgrounds/bg-001.jpg", "/backgrounds/bg-002.jpg", "/backgrounds/bg-003.jpg", "/backgrounds/bg-004.jpg", "/backgrounds/bg-005.jpg", "/backgrounds/bg-006.jpg", "/backgrounds/bg-007.jpg", "/backgrounds/bg-008.jpg", "/backgrounds/bg-009.jpg", "/backgrounds/bg-010.jpg", "/backgrounds/bg-011.jpg", "/backgrounds/bg-012.jpg"],
+  ["/backgrounds/bg-013.jpg", "/backgrounds/bg-014.jpg", "/backgrounds/bg-015.jpg", "/backgrounds/bg-016.jpg", "/backgrounds/bg-017.jpg", "/backgrounds/bg-018.jpg", "/backgrounds/bg-019.jpg", "/backgrounds/bg-020.jpg", "/backgrounds/bg-021.jpg", "/backgrounds/bg-022.jpg", "/backgrounds/bg-023.jpg", "/backgrounds/bg-024.jpg"],
+  ["/backgrounds/bg-025.jpg", "/backgrounds/bg-026.jpg", "/backgrounds/bg-027.jpg", "/backgrounds/bg-028.jpg", "/backgrounds/bg-029.jpg", "/backgrounds/bg-030.jpg", "/backgrounds/bg-031.jpg", "/backgrounds/bg-032.jpg", "/backgrounds/bg-033.jpg", "/backgrounds/bg-034.jpg", "/backgrounds/bg-035.jpg", "/backgrounds/bg-036.jpg"],
+  ["/backgrounds/bg-037.jpg", "/backgrounds/bg-038.jpg", "/backgrounds/bg-039.jpg", "/backgrounds/bg-040.jpg", "/backgrounds/bg-041.jpg", "/backgrounds/bg-042.jpg", "/backgrounds/bg-043.jpg", "/backgrounds/bg-044.jpg", "/backgrounds/bg-045.jpg", "/backgrounds/bg-046.jpg", "/backgrounds/bg-047.jpg", "/backgrounds/bg-048.jpg"],
+  ["/backgrounds/bg-049.jpg", "/backgrounds/bg-050.jpg", "/backgrounds/bg-051.jpg", "/backgrounds/bg-052.jpg", "/backgrounds/bg-053.jpg", "/backgrounds/bg-054.jpg", "/backgrounds/bg-055.jpg", "/backgrounds/bg-056.jpg", "/backgrounds/bg-057.jpg", "/backgrounds/bg-058.jpg", "/backgrounds/bg-059.jpg", "/backgrounds/bg-060.jpg"],
+  ["/backgrounds/bg-061.jpg", "/backgrounds/bg-062.jpg", "/backgrounds/bg-063.jpg", "/backgrounds/bg-064.jpg", "/backgrounds/bg-065.jpg", "/backgrounds/bg-066.jpg", "/backgrounds/bg-067.jpg", "/backgrounds/bg-068.jpg", "/backgrounds/bg-069.jpg", "/backgrounds/bg-070.jpg", "/backgrounds/bg-071.jpg"],
 ];
 
-export function moodFor(index: number): Mood {
-  return ADHKAR_MOODS[index % ADHKAR_MOODS.length];
+/** Which background-set is "today's" — stable all day, changes at local midnight. */
+export function daySetIndexForToday(): number {
+  const dayNumber = Math.floor(Date.now() / 86400000);
+  return dayNumber % BACKGROUND_SETS.length;
+}
+
+export function backgroundFor(daySet: string[], index: number): string {
+  return daySet[index % daySet.length];
 }
 
 export function levelForDays(n: number) {

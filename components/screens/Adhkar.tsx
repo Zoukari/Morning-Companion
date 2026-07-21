@@ -1,8 +1,8 @@
 "use client";
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import { Check } from "lucide-react";
 import { DayData } from "@/lib/types";
-import { ADHKAR, moodFor } from "@/lib/data";
+import { ADHKAR, BACKGROUND_SETS, daySetIndexForToday, backgroundFor } from "@/lib/data";
 import { vibrate, playTick } from "@/lib/storage";
 import { ProgressBar, TopBar } from "../ui";
 
@@ -22,7 +22,8 @@ export default function Adhkar({
   const item = ADHKAR[idx];
   const count = day.adhkarRepCounts[item.id] || 0;
   const [burst, setBurst] = useState(false);
-  const mood = moodFor(idx);
+  const todaySet = useMemo(() => BACKGROUND_SETS[daySetIndexForToday()], []);
+  const bgUrl = backgroundFor(todaySet, idx);
 
   const advancedRef = useRef(false);
   const liveCountRef = useRef(count);
@@ -86,21 +87,13 @@ export default function Adhkar({
 
   return (
     <div style={{ minHeight: "100vh", position: "relative", overflow: "hidden" }}>
-      <div style={{
-        position: "absolute", inset: 0, zIndex: 0,
-        background: `linear-gradient(155deg, ${mood.from} 0%, var(--bg) 78%)`,
-        transition: "background 0.9s ease",
-      }} />
-      <div style={{
-        position: "absolute", top: "-10%", right: "-15%", width: 320, height: 320, borderRadius: "50%",
-        background: mood.accent, opacity: 0.35, filter: "blur(90px)", zIndex: 0,
-        transition: "background 0.9s ease",
-      }} />
-      <div style={{
-        position: "absolute", bottom: "-15%", left: "-15%", width: 260, height: 260, borderRadius: "50%",
-        background: mood.from, opacity: 0.5, filter: "blur(80px)", zIndex: 0,
-        transition: "background 0.9s ease",
-      }} />
+      <div key={item.id} className="mc-fade-in" style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+        <img src={bgUrl} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        <div style={{
+          position: "absolute", inset: 0,
+          background: "linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 45%, var(--bg) 92%)",
+        }} />
+      </div>
 
       <div style={{ position: "relative", zIndex: 1 }}>
         <TopBar title={`${idx + 1} / ${ADHKAR.length}`} onBack={onExit} />

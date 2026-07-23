@@ -5,6 +5,12 @@ export type DayData = {
   eveningAdhkarIndex: number;
   eveningAdhkarRepCounts: Record<string, number>;
   eveningAdhkarCompleted: boolean;
+  qiyamAdhkarIndex: number;
+  qiyamAdhkarRepCounts: Record<string, number>;
+  qiyamAdhkarCompleted: boolean;
+  iftarAdhkarIndex: number;
+  iftarAdhkarRepCounts: Record<string, number>;
+  iftarAdhkarCompleted: boolean;
   routineChecks: Record<string, boolean>;
   routineCompleted: boolean;
   weight: number | null;
@@ -44,6 +50,12 @@ export const defaultDay = (): DayData => ({
   eveningAdhkarIndex: 0,
   eveningAdhkarRepCounts: {},
   eveningAdhkarCompleted: false,
+  qiyamAdhkarIndex: 0,
+  qiyamAdhkarRepCounts: {},
+  qiyamAdhkarCompleted: false,
+  iftarAdhkarIndex: 0,
+  iftarAdhkarRepCounts: {},
+  iftarAdhkarCompleted: false,
   routineChecks: {},
   routineCompleted: false,
   weight: null,

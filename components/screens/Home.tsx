@@ -1,18 +1,18 @@
 "use client";
 import React from "react";
 import { useEffect, useState } from "react";
-import { Settings as SettingsIcon, Check, ArrowRight, BarChart3, Moon, BookOpen } from "lucide-react";
+import { Settings as SettingsIcon, Check, ArrowRight, BarChart3, Moon, BookOpen, Star, Sunset } from "lucide-react";
 import { AppData, DayData } from "@/lib/types";
-import { ADHKAR, EVENING_ADHKAR, QUOTES, ENCOURAGEMENTS } from "@/lib/data";
+import { ADHKAR, EVENING_ADHKAR, QIYAM_ADHKAR, IFTAR_ADHKAR, QUOTES, ENCOURAGEMENTS } from "@/lib/data";
 import { toArabicName } from "@/lib/transliterate";
 import { AtmosphereBackground, ProgressBar, TopBar } from "../ui";
 
 export default function Home({
-  app, day, now, onStart, onOpenDashboard, onOpenSettings, onOpenEveningAdhkar, onReviewAdhkar,
+  app, day, now, onStart, onOpenDashboard, onOpenSettings, onOpenEveningAdhkar, onOpenQiyamAdhkar, onOpenIftarAdhkar, onReviewAdhkar,
 }: {
   app: AppData; day: DayData; now: Date;
   onStart: () => void; onOpenDashboard: () => void; onOpenSettings: () => void;
-  onOpenEveningAdhkar: () => void; onReviewAdhkar: () => void;
+  onOpenEveningAdhkar: () => void; onOpenQiyamAdhkar: () => void; onOpenIftarAdhkar: () => void; onReviewAdhkar: () => void;
 }) {
   const [quoteIdx, setQuoteIdx] = useState(() => Math.floor(Math.random() * QUOTES.length));
   const [klikFixed, setKlikFixed] = useState(true);
@@ -154,6 +154,34 @@ export default function Home({
             <Check size={13} color="var(--emerald)" />
           ) : (
             <span style={{ color: "var(--text-faint)" }}>· {day.eveningAdhkarIndex}/{EVENING_ADHKAR.length}</span>
+          )}
+        </button>
+
+        <button onClick={onOpenQiyamAdhkar} className="mc-btn" style={{
+          marginTop: 10, width: "100%", padding: "13px", borderRadius: 16, border: "1px solid var(--border)",
+          background: "transparent", color: "var(--text-dim)", fontSize: 13, cursor: "pointer",
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+        }}>
+          <Star size={15} color={day.qiyamAdhkarCompleted ? "var(--emerald)" : "var(--text-dim)"} />
+          Qiyam al-Layl (facultatif)
+          {day.qiyamAdhkarCompleted ? (
+            <Check size={13} color="var(--emerald)" />
+          ) : (
+            <span style={{ color: "var(--text-faint)" }}>· {day.qiyamAdhkarIndex}/{QIYAM_ADHKAR.length}</span>
+          )}
+        </button>
+
+        <button onClick={onOpenIftarAdhkar} className="mc-btn" style={{
+          marginTop: 10, width: "100%", padding: "13px", borderRadius: 16, border: "1px solid var(--border)",
+          background: "transparent", color: "var(--text-dim)", fontSize: 13, cursor: "pointer",
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+        }}>
+          <Sunset size={15} color={day.iftarAdhkarCompleted ? "var(--emerald)" : "var(--text-dim)"} />
+          Avant l&apos;iftar (facultatif)
+          {day.iftarAdhkarCompleted ? (
+            <Check size={13} color="var(--emerald)" />
+          ) : (
+            <span style={{ color: "var(--text-faint)" }}>· {day.iftarAdhkarIndex}/{IFTAR_ADHKAR.length}</span>
           )}
         </button>
 

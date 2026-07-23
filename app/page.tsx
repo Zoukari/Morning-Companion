@@ -9,6 +9,8 @@ import Onboarding from "@/components/screens/Onboarding";
 import Home from "@/components/screens/Home";
 import Adhkar from "@/components/screens/Adhkar";
 import EveningAdhkar from "@/components/screens/EveningAdhkar";
+import QiyamAdhkar from "@/components/screens/QiyamAdhkar";
+import IftarAdhkar from "@/components/screens/IftarAdhkar";
 import AdhkarComplete from "@/components/screens/AdhkarComplete";
 import Routine from "@/components/screens/Routine";
 import WeightScreen from "@/components/screens/Weight";
@@ -19,7 +21,7 @@ import Dashboard from "@/components/screens/Dashboard";
 import SettingsScreen from "@/components/screens/Settings";
 
 type Screen =
-  | "home" | "adhkar" | "adhkarComplete" | "eveningAdhkar" | "routine" | "weight" | "goal"
+  | "home" | "adhkar" | "adhkarComplete" | "eveningAdhkar" | "qiyamAdhkar" | "iftarAdhkar" | "routine" | "weight" | "goal"
   | "routineDone" | "alreadyDone" | "dashboard" | "reflection" | "settings";
 
 export default function Page() {
@@ -164,6 +166,8 @@ export default function Page() {
       return <Home app={app} day={day} now={now} onStart={handleStart}
         onOpenDashboard={() => setScreen("dashboard")} onOpenSettings={() => setScreen("settings")}
         onOpenEveningAdhkar={() => setScreen("eveningAdhkar")}
+        onOpenQiyamAdhkar={() => setScreen("qiyamAdhkar")}
+        onOpenIftarAdhkar={() => setScreen("iftarAdhkar")}
         onReviewAdhkar={() => { setDay(d => ({ ...d, adhkarIndex: 0 })); setAdhkarReview(true); setScreen("adhkar"); }} />;
     case "adhkar":
       return <Adhkar day={day} setDay={setDay} soundOn={app.settings.soundCounter}
@@ -171,6 +175,12 @@ export default function Page() {
         onExit={() => { setAdhkarReview(false); setScreen("home"); }} />;
     case "eveningAdhkar":
       return <EveningAdhkar day={day} setDay={setDay} soundOn={app.settings.soundCounter}
+        onDone={() => setScreen("home")} onExit={() => setScreen("home")} />;
+    case "qiyamAdhkar":
+      return <QiyamAdhkar day={day} setDay={setDay} soundOn={app.settings.soundCounter}
+        onDone={() => setScreen("home")} onExit={() => setScreen("home")} />;
+    case "iftarAdhkar":
+      return <IftarAdhkar day={day} setDay={setDay} soundOn={app.settings.soundCounter}
         onDone={() => setScreen("home")} onExit={() => setScreen("home")} />;
     case "adhkarComplete":
       return <AdhkarComplete onContinue={() => setScreen("routine")} />;

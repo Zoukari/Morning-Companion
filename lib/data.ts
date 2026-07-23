@@ -70,6 +70,40 @@ export const EVENING_ADHKAR: AdhkarItem[] = [
     arabic: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ" },
 ];
 
+// Adhkar pour Qiyam al-Layl — inspiré des duas personnelles de l'utilisateur
+// (dettes, rizq, santé, mariage, projets, Omra), adapté au format de l'app.
+export const QIYAM_ADHKAR: AdhkarItem[] = [
+  { id: "qiyam-tahajjud", title: "Dua d'ouverture (Tahajjud)", repetitions: 1,
+    arabic: "اللَّهُمَّ لَكَ الْحَمْدُ، أَنْتَ رَبُّ السَّمَاوَاتِ وَالْأَرْضِ، أَنْتَ الْحَقُّ، وَوَعْدُكَ الْحَقُّ، وَلِقَاؤُكَ حَقٌّ، وَقَوْلُكَ حَقٌّ، اللَّهُمَّ لَكَ أَسْلَمْتُ، وَبِكَ آمَنْتُ، وَعَلَيْكَ تَوَكَّلْتُ، وَإِلَيْكَ أَخْبَتُّ، فَاغْفِرْ لِي مَا قَدَّمْتُ وَمَا أَخَّرْتُ" },
+  { id: "qiyam-istighfar", title: "Sayyid al-Istighfar", repetitions: 1,
+    arabic: "اللهم أنت ربي لا إله إلا أنت خلقتني وأنا عبدك وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شر ما صنعت، أبوء لك بنعمتك علي، وأبوء بذنبي فاغفر لي فإنه لا يغفر الذنوب إلا أنت" },
+  { id: "qiyam-dettes", title: "Pour les dettes et les soucis", repetitions: 1,
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ" },
+  { id: "qiyam-rizq", title: "Pour le rizq et la suffisance", repetitions: 1,
+    arabic: "اللَّهُمَّ اكْفِنِي بِحَلَالِكَ عَنْ حَرَامِكَ، وَأَغْنِنِي بِفَضْلِكَ عَمَّنْ سِوَاكَ" },
+  { id: "qiyam-sante", title: "Pour la santé", repetitions: 1,
+    arabic: "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي" },
+  { id: "qiyam-remerciement", title: "Pour bien Te remercier", repetitions: 1,
+    arabic: "اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ" },
+  { id: "qiyam-projets", title: "Pour mes projets (Vagabox, Shakpot, Klik)", repetitions: 1,
+    arabic: "رَبِّ اشْرَحْ لِي صَدْرِي، وَيَسِّرْ لِي أَمْرِي، اللَّهُمَّ يَسِّرْ أُمُورِي، وَبَارِكْ لِي فِي مَشَارِيعِي، وَأَعِنِّي عَلَى تَحْقِيقِ مَا فِيهِ خَيْرٌ لِي، وَاجْعَلْهَا نَافِعَةً لِي وَلِغَيْرِي" },
+  { id: "qiyam-mariage", title: "Pour le mariage", repetitions: 1,
+    arabic: "اللَّهُمَّ يَسِّرْ لِي الزَّوَاجَ إِنْ كَانَ خَيْرًا لِي، وَأَلِّفْ بَيْنَ الْقُلُوبِ، رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ، اللَّهُمَّ آنِسْ وَحْدَتِي وَارْزُقْنِي زَوْجَةً صَالِحَةً تَكُونُ سَكَنًا لِقَلْبِي" },
+  { id: "qiyam-omra", title: "Pour la Omra", repetitions: 1,
+    arabic: "اللَّهُمَّ يَسِّرْ لِي أَدَاءَ الْعُمْرَةِ فِي أَقْرَبِ وَقْتٍ، وَتَقَبَّلْهَا مِنِّي، وَاجْعَلْهَا سَبَبًا لِرِضَاكَ عَنِّي" },
+  { id: "qiyam-cloture", title: "Clôture", repetitions: 1,
+    arabic: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ، رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ" },
+];
+
+// Avant de couper le jeûne — 2 cartes : une pour le moment de dua avant la
+// rupture (dua du jeûneur non refusée), une pour le moment de la rupture.
+export const IFTAR_ADHKAR: AdhkarItem[] = [
+  { id: "iftar-avant", title: "Avant de rompre (dua du jeûneur)", repetitions: 1,
+    arabic: "اللَّهُمَّ إِنِّي أَسْأَلُكَ بِرَحْمَتِكَ الَّتِي وَسِعَتْ كُلَّ شَيْءٍ أَنْ تَغْفِرَ لِي" },
+  { id: "iftar-rupture", title: "Au moment de rompre le jeûne", repetitions: 1,
+    arabic: "ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ" },
+];
+
 export type RoutineTask = { id: string; label: string };
 
 export const ROUTINE_TASKS: RoutineTask[] = [

@@ -4,7 +4,7 @@ import { Check, SkipBack } from "lucide-react";
 import { DayData } from "@/lib/types";
 import { EVENING_ADHKAR, ADHKAR, BACKGROUND_SETS, daySetIndexForToday, backgroundFor } from "@/lib/data";
 import { vibrate, playTick } from "@/lib/storage";
-import { ProgressBar, TopBar } from "../ui";
+import { ProgressBar, TopBar, chipStyle } from "../ui";
 
 const HOLD_DELAY = 320;
 const HOLD_INTERVAL = 90;
@@ -108,9 +108,10 @@ export default function EveningAdhkar({
         <TopBar
           title={`Soir · ${idx + 1} / ${EVENING_ADHKAR.length}`}
           onBack={onExit}
+          chip
           right={idx > 0 ? (
-            <button onClick={goPrevious} className="mc-btn" style={{ background: "none", border: "none", color: "var(--text-dim)", cursor: "pointer", padding: 6 }} aria-label="Hadith précédent">
-              <SkipBack size={18} />
+            <button onClick={goPrevious} className="mc-btn" style={{ ...chipStyle, cursor: "pointer", color: "#fff" }} aria-label="Hadith précédent">
+              <SkipBack size={16} />
             </button>
           ) : undefined}
         />
@@ -134,9 +135,11 @@ export default function EveningAdhkar({
                 className="mc-scale-tap mc-btn"
                 style={{
                   width: 148, height: 148, borderRadius: "50%", border: "2px solid var(--emerald-line)",
-                  background: "var(--emerald-soft)", cursor: "pointer", position: "relative",
+                  background: burst ? "var(--emerald-soft)" : "rgba(10,10,11,0.6)",
+                  backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)",
+                  cursor: "pointer", position: "relative",
                   display: "flex", alignItems: "center", justifyContent: "center", touchAction: "none",
-                  transform: burst ? "scale(1.08)" : "scale(1)", transition: "transform 0.25s ease",
+                  transform: burst ? "scale(1.08)" : "scale(1)", transition: "transform 0.25s ease, background 0.25s ease",
                 }}
               >
                 <div className="font-display" style={{ fontSize: 30, color: "var(--emerald)" }}>
@@ -155,9 +158,10 @@ export default function EveningAdhkar({
                 ))}
               </div>
               <button onClick={tap} className="mc-btn mc-scale-tap" style={{
-                marginTop: 28, padding: "16px 34px", borderRadius: 16, border: "none",
-                background: burst ? "var(--emerald)" : "var(--emerald-soft)",
-                color: burst ? "#fff" : "var(--emerald)",
+                marginTop: 28, padding: "16px 34px", borderRadius: 16, border: "1px solid var(--emerald-line)",
+                background: burst ? "var(--emerald)" : "rgba(10,10,11,0.6)",
+                backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)",
+                color: burst ? "#fff" : "#3ddb7f",
                 fontSize: 15, fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: 8,
               }}>
                 <Check size={17} /> J&apos;ai récité {item.repetitions > 1 ? `(${count}/${item.repetitions})` : ""}

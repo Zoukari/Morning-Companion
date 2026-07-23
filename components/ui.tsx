@@ -60,16 +60,28 @@ export const AtmosphereBackground = ({ variant = "home" }: { variant?: "home" | 
   </>
 );
 
-export const TopBar = ({ title, onBack, right }: { title: string; onBack?: () => void; right?: React.ReactNode }) => (
+export const chipStyle: React.CSSProperties = {
+  background: "rgba(10,10,11,0.5)",
+  backdropFilter: "blur(10px)",
+  WebkitBackdropFilter: "blur(10px)",
+  border: "1px solid rgba(255,255,255,0.18)",
+  borderRadius: "50%",
+  width: 34, height: 34,
+  display: "flex", alignItems: "center", justifyContent: "center",
+};
+
+export const TopBar = ({ title, onBack, right, chip }: { title: string; onBack?: () => void; right?: React.ReactNode; chip?: boolean }) => (
   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "18px 20px 10px", position: "relative", zIndex: 1 }}>
-    <div style={{ width: 32 }}>
+    <div style={{ width: chip ? 34 : 32 }}>
       {onBack && (
-        <button onClick={onBack} className="mc-btn" style={{ background: "none", border: "none", color: "var(--text-dim)", cursor: "pointer", padding: 6 }}>
-          <ChevronLeft size={22} />
+        <button onClick={onBack} className="mc-btn" style={chip
+          ? { ...chipStyle, cursor: "pointer", color: "#fff" }
+          : { background: "none", border: "none", color: "var(--text-dim)", cursor: "pointer", padding: 6 }}>
+          <ChevronLeft size={20} />
         </button>
       )}
     </div>
-    <div style={{ fontSize: 13, letterSpacing: 1.5, color: "var(--text-dim)", textTransform: "uppercase" }}>{title}</div>
-    <div style={{ width: 32, display: "flex", justifyContent: "flex-end" }}>{right}</div>
+    <div style={{ fontSize: 13, letterSpacing: 1.5, color: chip ? "#fff" : "var(--text-dim)", textTransform: "uppercase", textShadow: chip ? "0 1px 4px rgba(0,0,0,0.6)" : "none" }}>{title}</div>
+    <div style={{ width: chip ? 34 : 32, display: "flex", justifyContent: "flex-end" }}>{right}</div>
   </div>
 );

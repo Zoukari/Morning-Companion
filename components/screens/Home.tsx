@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useEffect, useState } from "react";
 import { Settings as SettingsIcon, Check, ArrowRight, BarChart3, Moon, BookOpen } from "lucide-react";
 import { AppData, DayData } from "@/lib/types";
 import { ADHKAR, EVENING_ADHKAR, QUOTES } from "@/lib/data";
@@ -12,13 +13,20 @@ export default function Home({
   onStart: () => void; onOpenDashboard: () => void; onOpenSettings: () => void;
   onOpenEveningAdhkar: () => void; onReviewAdhkar: () => void;
 }) {
+  const [quoteIdx, setQuoteIdx] = useState(() => Math.floor(Math.random() * QUOTES.length));
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setQuoteIdx(i => (i + 1) % QUOTES.length);
+    }, 10000);
+    return () => clearInterval(timer);
+  }, []);
+  const quote = QUOTES[quoteIdx];
   const adhkarPct = day.adhkarCompleted ? 100 : Math.round((day.adhkarIndex / ADHKAR.length) * 100);
   const overallDone = day.adhkarCompleted && day.routineCompleted;
   const pct = overallDone ? 100 : day.adhkarCompleted ? 55 : Math.round(adhkarPct * 0.5);
 
   const dateStr = now.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
   const timeStr = now.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
-  const quote = QUOTES[now.getDate() % QUOTES.length];
 
   let cta = "Commencer";
   if (day.adhkarCompleted && !day.routineCompleted) cta = "Continuer la routine";
@@ -65,8 +73,15 @@ export default function Home({
           </div>
         </div>
 
-        <div style={{ marginTop: 18, fontSize: 13, color: "var(--text-dim)", fontStyle: "italic", lineHeight: 1.5, padding: "0 4px" }}>
-          « {quote.text} »
+        <div key={quoteIdx} className="mc-fade-in" style={{ marginTop: 18, padding: "0 4px" }}>
+          {quote.arabic && (
+            <div className="font-arabic" dir="rtl" style={{ fontSize: 17, color: "var(--gold)", lineHeight: 1.7, marginBottom: 6, textAlign: "right" }}>
+              {quote.arabic}
+            </div>
+          )}
+          <div style={{ fontSize: 13, color: "var(--text-dim)", fontStyle: "italic", lineHeight: 1.5 }}>
+            « {quote.text} »
+          </div>
           <div style={{ marginTop: 4, fontSize: 11, color: "var(--text-faint)" }}>— {quote.source}</div>
         </div>
 

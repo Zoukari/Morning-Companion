@@ -82,12 +82,65 @@ export const ROUTINE_TASKS: RoutineTask[] = [
   { id: "sunnan", label: "Prier les sunnan si nécessaire" },
 ];
 
-export const QUOTES = [
-  { text: "Et quiconque place sa confiance en Allah, Il lui suffit.", source: "Sourate At-Talaq, 65:3" },
-  { text: "La meilleure des invocations est celle faite à l'aube.", source: "Tradition prophétique" },
-  { text: "Celui qui emprunte un chemin cherchant la science, Allah lui facilite un chemin vers le Paradis.", source: "Hadith rapporté par Muslim" },
+export type Quote = { text: string; arabic?: string; source: string };
+
+// A curated set of well-known ayat, hadith and scholarly quotes, FR + AR where
+// the Arabic wording is well-established. This is intentionally not padded
+// out to an arbitrary count with anything unverified — better a shorter list
+// Claude is confident in than a long one with shaky attributions. Easy to
+// extend later: just add more objects in the same shape.
+export const QUOTES: Quote[] = [
+  { text: "Et quiconque place sa confiance en Allah, Il lui suffit.", arabic: "وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ", source: "Sourate At-Talaq, 65:3" },
+  { text: "C'est par le rappel d'Allah que les cœurs s'apaisent.", arabic: "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ", source: "Sourate Ar-Ra'd, 13:28" },
+  { text: "Allah n'impose à une âme que ce qu'elle peut supporter.", arabic: "لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا", source: "Sourate Al-Baqara, 2:286" },
+  { text: "Avec la difficulté vient certainement la facilité.", arabic: "إِنَّ مَعَ الْعُسْرِ يُسْرًا", source: "Sourate Ash-Sharh, 94:6" },
+  { text: "Invoquez-Moi, Je vous répondrai.", arabic: "ادْعُونِي أَسْتَجِبْ لَكُمْ", source: "Sourate Ghafir, 40:60" },
+  { text: "Allah aime ceux qui reviennent sans cesse à Lui et ceux qui se purifient.", arabic: "إِنَّ اللَّهَ يُحِبُّ التَّوَّابِينَ وَيُحِبُّ الْمُتَطَهِّرِينَ", source: "Sourate Al-Baqara, 2:222" },
+  { text: "Ne perdez pas espoir de la miséricorde d'Allah.", arabic: "لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ", source: "Sourate Az-Zumar, 39:53" },
+  { text: "Si vous êtes reconnaissants, très certainement Je vous accorderai davantage.", arabic: "لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ", source: "Sourate Ibrahim, 14:7" },
+  { text: "Certes, la prière préserve de la turpitude et de ce qui est blâmable.", arabic: "إِنَّ الصَّلَاةَ تَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنكَرِ", source: "Sourate Al-'Ankabut, 29:45" },
+  { text: "Ton Seigneur n'a pas pris congé de toi, et Il ne te méprise pas.", arabic: "مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ", source: "Sourate Ad-Duha, 93:3" },
+  { text: "Rien ne nous atteint que ce qu'Allah a prescrit pour nous.", arabic: "قُل لَّن يُصِيبَنَا إِلَّا مَا كَتَبَ اللَّهُ لَنَا", source: "Sourate At-Tawba, 9:51" },
+  { text: "En vérité, la prière est prescrite aux croyants à des moments déterminés.", arabic: "إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا", source: "Sourate An-Nisa, 4:103" },
+  { text: "Ceux qui craignent Allah, quand un mal les touche du fait du Diable, se rappellent, et alors ils voient clair.", arabic: "إِنَّ الَّذِينَ اتَّقَوْا إِذَا مَسَّهُمْ طَائِفٌ مِّنَ الشَّيْطَانِ تَذَكَّرُوا فَإِذَا هُم مُّبْصِرُونَ", source: "Sourate Al-A'raf, 7:201" },
+  { text: "Les actes ne valent que par les intentions.", source: "Hadith rapporté par Al-Bukhari et Muslim" },
+  { text: "Le meilleur d'entre vous est celui qui apprend le Coran et l'enseigne.", source: "Hadith rapporté par Al-Bukhari" },
+  { text: "Celui qui ne remercie pas les gens ne remercie pas Allah.", source: "Hadith rapporté par At-Tirmidhi" },
+  { text: "Aucun de vous n'aura la foi complète avant d'aimer pour son frère ce qu'il aime pour lui-même.", source: "Hadith rapporté par Al-Bukhari et Muslim" },
+  { text: "Le sourire adressé à ton frère est une aumône.", source: "Hadith rapporté par At-Tirmidhi" },
+  { text: "Allah est doux et aime la douceur en toute chose.", source: "Hadith rapporté par Al-Bukhari et Muslim" },
+  { text: "La force véritable n'est pas de vaincre autrui, mais de maîtriser sa colère.", source: "Hadith rapporté par Al-Bukhari et Muslim" },
+  { text: "Le croyant fort n'est pas celui qui triomphe des hommes, mais celui qui maîtrise ses passions.", source: "Hadith rapporté par Muslim" },
+  { text: "Facilitez, ne compliquez pas ; annoncez la bonne nouvelle, ne rebutez pas.", source: "Hadith rapporté par Al-Bukhari et Muslim" },
+  { text: "Ta prière pour ton frère en son absence est exaucée.", source: "Hadith rapporté par Muslim" },
+  { text: "Celui qui guide vers le bien a la même récompense que celui qui l'accomplit.", source: "Hadith rapporté par Muslim" },
+  { text: "Deux bienfaits dont beaucoup de gens sont négligents : la santé et le temps libre.", source: "Hadith rapporté par Al-Bukhari" },
+  { text: "L'homme le plus proche de moi le jour du Jugement sera celui dont le caractère est le meilleur.", source: "Hadith rapporté par At-Tirmidhi" },
+  { text: "Sois dans ce bas monde comme un voyageur, ou comme quelqu'un qui passe.", source: "Hadith rapporté par Al-Bukhari" },
+  { text: "Quand tu ne ressens plus de honte à mal agir, alors fais ce que tu veux.", source: "Hadith rapporté par Al-Bukhari" },
   { text: "Le cœur ne trouve le repos qu'en se rappelant d'Allah.", source: "Ibn Al-Qayyim" },
   { text: "La patience est une lumière qui n'a pas de fin.", source: "Ibn Taymiyyah" },
+  { text: "Quand le cœur s'attache à autre chose qu'Allah, il devient l'esclave de ce à quoi il s'attache.", source: "Ibn Al-Qayyim" },
+  { text: "Le repentir n'est jamais en retard tant que le dernier souffle n'est pas rendu.", source: "Ibn Al-Qayyim" },
+  { text: "Si tu ne peux pas pleurer, essaie au moins de faire semblant, car le cœur dur ne s'attendrit qu'en se rappelant d'Allah.", source: "Ibn Al-Qayyim" },
+  { text: "Ce qu'Allah t'a destiné viendra à toi, même si tu es faible ; ce qu'Il n'a pas destiné pour toi ne viendra pas, même si tu es fort.", source: "Ibn Taymiyyah" },
+  { text: "Le Paradis d'ici-bas est la tranquillité du cœur.", source: "Ibn Taymiyyah" },
+  { text: "Rien n'est plus utile au cœur que de rester seul avec Allah, à un moment donné, pour L'invoquer, réciter Son Livre et faire son introspection.", source: "Ibn Al-Qayyim" },
+  { text: "Celui qui connaît vraiment Allah ne cesse jamais d'espérer en Lui.", source: "Ibn Ata'Illah" },
+  { text: "Ne quitte pas ta place tant qu'Il ne t'a pas mis en mouvement, et n'agis pas tant qu'Il ne t'a pas assisté.", source: "Ibn Ata'Illah" },
+  { text: "Il se peut qu'un péché soit la cause d'une bénédiction, s'il te conduit ensuite à te tenir devant ton Seigneur, brisé et humble.", source: "Ibn Ata'Illah" },
+  { text: "La science sans action est comme un arbre sans fruit.", source: "Ibn Al-Qayyim" },
+  { text: "Prends garde de vivre confiné à l'intérieur de toi-même, tu passerais à côté de nombreuses bontés cachées d'Allah.", source: "Ibn Ata'Illah" },
+  { text: "Ton Seigneur t'a apporté ce qui te suffit ; c'est toi qui n'as pas apporté l'acceptation qui suffit.", source: "Ibn Ata'Illah" },
+  { text: "La vraie richesse n'est pas d'avoir beaucoup de biens, mais la richesse est celle de l'âme.", source: "Hadith rapporté par Al-Bukhari et Muslim" },
+  { text: "Quiconque emprunte un chemin cherchant la science, Allah lui facilite un chemin vers le Paradis.", source: "Hadith rapporté par Muslim" },
+  { text: "Aucune fatigue, maladie, souci, tristesse, tort ou chagrin n'atteint le musulman, pas même une épine qui le pique, sans qu'Allah n'en fasse une expiation pour ses péchés.", source: "Hadith rapporté par Al-Bukhari" },
+  { text: "N'éprouve de la colère contre rien : si une chose te convient, remercie Allah ; sinon, patiente.", source: "Ibn Taymiyyah" },
+  { text: "Réjouis-toi de trois choses : qu'Il t'ait fait connaître Sa religion, qu'Il ne t'ait pas fait dépendre d'un autre que Lui, et qu'Il ait accepté de toi une once de bonté.", source: "Ibn Ata'Illah" },
+  { text: "Le plus grand bienfait sur toi est celui que tu ne remarques même pas, tant il est constant.", source: "Ibn Al-Qayyim" },
+  { text: "Ô toi qui recherches la station des gens de bien, sache que la voie y menant passe par le sacrifice de tes envies.", source: "Ibn Al-Qayyim" },
+  { text: "Toute chose a une sécheresse, et la sécheresse de la science est l'oubli.", source: "Ibn Al-Qayyim" },
+  { text: "La gratitude est le fait de voir la faveur venir d'Allah, et non de la personne à travers qui elle est arrivée.", source: "Ibn Al-Qayyim" },
 ];
 
 export const BADGES = [7, 30, 100, 365];

@@ -42,7 +42,7 @@ export default function Home({
   if (overallDone) cta = "Voir le tableau de bord";
 
   return (
-    <div className="mc-fade-in" style={{ minHeight: "100vh", paddingBottom: 40, position: "relative", overflowX: "hidden" }}>
+    <div className="mc-fade-in" style={{ minHeight: "100vh", paddingBottom: klikFixed ? 90 : 40, position: "relative", overflowX: "hidden" }}>
       <AtmosphereBackground />
       <TopBar
         title=""
@@ -144,11 +144,11 @@ export default function Home({
         )}
 
         <button onClick={onOpenEveningAdhkar} className="mc-btn" style={{
-          marginTop: 10, width: "100%", padding: "13px", borderRadius: 16, border: "1px solid var(--border)",
-          background: "transparent", color: "var(--text-dim)", fontSize: 13, cursor: "pointer",
-          display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+          marginTop: 10, width: "100%", padding: "13px", borderRadius: 16, border: "1px solid rgba(129,140,248,0.35)",
+          background: "rgba(129,140,248,0.10)", color: "var(--text)", fontSize: 13, cursor: "pointer",
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontWeight: 500,
         }}>
-          <Moon size={15} color={day.eveningAdhkarCompleted ? "var(--emerald)" : "var(--text-dim)"} />
+          <Moon size={15} color="#818cf8" />
           Azkar du soir (facultatif)
           {day.eveningAdhkarCompleted ? (
             <Check size={13} color="var(--emerald)" />
@@ -158,11 +158,11 @@ export default function Home({
         </button>
 
         <button onClick={onOpenQiyamAdhkar} className="mc-btn" style={{
-          marginTop: 10, width: "100%", padding: "13px", borderRadius: 16, border: "1px solid var(--border)",
-          background: "transparent", color: "var(--text-dim)", fontSize: 13, cursor: "pointer",
-          display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+          marginTop: 10, width: "100%", padding: "13px", borderRadius: 16, border: "1px solid rgba(200,167,93,0.4)",
+          background: "rgba(200,167,93,0.12)", color: "var(--text)", fontSize: 13, cursor: "pointer",
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontWeight: 500,
         }}>
-          <Star size={15} color={day.qiyamAdhkarCompleted ? "var(--emerald)" : "var(--text-dim)"} />
+          <Star size={15} color="var(--gold)" />
           Qiyam al-Layl (facultatif)
           {day.qiyamAdhkarCompleted ? (
             <Check size={13} color="var(--emerald)" />
@@ -172,11 +172,11 @@ export default function Home({
         </button>
 
         <button onClick={onOpenIftarAdhkar} className="mc-btn" style={{
-          marginTop: 10, width: "100%", padding: "13px", borderRadius: 16, border: "1px solid var(--border)",
-          background: "transparent", color: "var(--text-dim)", fontSize: 13, cursor: "pointer",
-          display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+          marginTop: 10, width: "100%", padding: "13px", borderRadius: 16, border: "1px solid rgba(251,146,60,0.4)",
+          background: "rgba(251,146,60,0.12)", color: "var(--text)", fontSize: 13, cursor: "pointer",
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontWeight: 500,
         }}>
-          <Sunset size={15} color={day.iftarAdhkarCompleted ? "var(--emerald)" : "var(--text-dim)"} />
+          <Sunset size={15} color="#fb923c" />
           Avant l&apos;iftar (facultatif)
           {day.iftarAdhkarCompleted ? (
             <Check size={13} color="var(--emerald)" />
@@ -200,12 +200,16 @@ export default function Home({
 function KlikBadge() {
   return (
     <div style={{ display: "flex", justifyContent: "center", marginTop: 24 }}>
-      <div style={{
-        display: "flex", alignItems: "center", gap: 10, padding: "9px 18px",
-        borderRadius: 999, background: "#11111c",
-        border: "1px solid rgba(167,139,250,0.35)",
-        boxShadow: "0 4px 24px rgba(0,0,0,0.4)",
-      }}>
+      <a
+        href="https://klikdj.com" target="_blank" rel="noopener noreferrer"
+        style={{
+          display: "flex", alignItems: "center", gap: 10, padding: "9px 18px",
+          borderRadius: 999, background: "#11111c",
+          border: "1px solid rgba(167,139,250,0.35)",
+          boxShadow: "0 4px 24px rgba(0,0,0,0.4)",
+          textDecoration: "none", cursor: "pointer",
+        }}
+      >
         <div style={{
           width: 22, height: 22, borderRadius: "50%",
           background: "linear-gradient(135deg, #d9c5f9, #b79cf0)",
@@ -217,7 +221,7 @@ function KlikBadge() {
         </span>
         <span style={{ fontSize: 13, color: "#45454f" }}>|</span>
         <span style={{ fontSize: 13, color: "#b0b0c0" }}>© {new Date().getFullYear()}</span>
-      </div>
+      </a>
     </div>
   );
 }

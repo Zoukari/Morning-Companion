@@ -15,7 +15,7 @@ export default function Splash() {
         }}>
           <Moon size={30} color="var(--gold)" strokeWidth={1.5} />
         </div>
-        <div className="font-display" style={{ fontSize: 30, fontWeight: 500, letterSpacing: 0.5 }}>Morning Companion</div>
+        <div className="font-display" style={{ fontSize: 30, fontWeight: 500, letterSpacing: 0.5 }}>Allah First</div>
         <div style={{ marginTop: 10, fontSize: 14, color: "var(--text-dim)", letterSpacing: 0.5 }}>Begin your day with Allah.</div>
       </div>
     </div>

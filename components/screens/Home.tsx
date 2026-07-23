@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Settings as SettingsIcon, Check, ArrowRight, BarChart3, Moon, BookOpen } from "lucide-react";
 import { AppData, DayData } from "@/lib/types";
 import { ADHKAR, EVENING_ADHKAR, QUOTES, ENCOURAGEMENTS } from "@/lib/data";
+import { toArabicName } from "@/lib/transliterate";
 import { AtmosphereBackground, ProgressBar, TopBar } from "../ui";
 
 export default function Home({
@@ -14,6 +15,11 @@ export default function Home({
   onOpenEveningAdhkar: () => void; onReviewAdhkar: () => void;
 }) {
   const [quoteIdx, setQuoteIdx] = useState(() => Math.floor(Math.random() * QUOTES.length));
+  const [klikFixed, setKlikFixed] = useState(true);
+  useEffect(() => {
+    const t = setTimeout(() => setKlikFixed(false), 20000);
+    return () => clearTimeout(t);
+  }, []);
   useEffect(() => {
     const timer = setInterval(() => {
       setQuoteIdx(i => (i + 1) % QUOTES.length);
@@ -21,6 +27,7 @@ export default function Home({
     return () => clearInterval(timer);
   }, []);
   const quote = QUOTES[quoteIdx];
+  const arabicName = toArabicName(app.settings.userName);
   const encouragement = ENCOURAGEMENTS[quoteIdx % ENCOURAGEMENTS.length].replace("{name}", app.settings.userName);
   const QUOTE_INTERVAL_MS = 10000;
   const adhkarPct = day.adhkarCompleted ? 100 : Math.round((day.adhkarIndex / ADHKAR.length) * 100);
@@ -47,7 +54,7 @@ export default function Home({
       />
       <div style={{ position: "relative", zIndex: 1, padding: "10px 24px" }}>
         <div className="font-arabic" dir="rtl" style={{ fontSize: 26, color: "var(--gold)", marginBottom: 6, textAlign: "right" }}>
-          السلام عليكم ورحمة الله وبركاته
+          السلام عليكم ورحمة الله وبركاته {arabicName && `يا ${arabicName}`}
         </div>
         <div className="font-display" style={{ fontSize: 24, marginTop: 18, lineHeight: 1.3 }}>
           Aujourd&apos;hui est une nouvelle occasion<br />de se rapprocher d&apos;Allah.
@@ -150,23 +157,38 @@ export default function Home({
           )}
         </button>
 
-        <div style={{ display: "flex", justifyContent: "center", marginTop: 24 }}>
-          <div style={{
-            display: "flex", alignItems: "center", gap: 10, padding: "8px 16px",
-            borderRadius: 999, background: "#0d0d14", border: "1px solid rgba(255,255,255,0.08)",
-          }}>
-            <div style={{
-              width: 20, height: 20, borderRadius: "50%", background: "#c9a8f5",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: 11, fontWeight: 700, color: "#1a1a2e", flexShrink: 0,
-            }}>K</div>
-            <span style={{ fontSize: 12, color: "#a8a8b8" }}>
-              Site par <span style={{ color: "#a78bfa", fontWeight: 700 }}>KLIK</span>
-            </span>
-            <span style={{ fontSize: 12, color: "#55555f" }}>|</span>
-            <span style={{ fontSize: 12, color: "#a8a8b8" }}>© {new Date().getFullYear()}</span>
-          </div>
+        {!klikFixed && <KlikBadge />}
+      </div>
+
+      {klikFixed && (
+        <div style={{ position: "fixed", bottom: 18, left: "50%", transform: "translateX(-50%)", zIndex: 50 }}>
+          <KlikBadge />
         </div>
+      )}
+    </div>
+  );
+}
+
+function KlikBadge() {
+  return (
+    <div style={{ display: "flex", justifyContent: "center", marginTop: 24 }}>
+      <div style={{
+        display: "flex", alignItems: "center", gap: 10, padding: "9px 18px",
+        borderRadius: 999, background: "#11111c",
+        border: "1px solid rgba(167,139,250,0.35)",
+        boxShadow: "0 4px 24px rgba(0,0,0,0.4)",
+      }}>
+        <div style={{
+          width: 22, height: 22, borderRadius: "50%",
+          background: "linear-gradient(135deg, #d9c5f9, #b79cf0)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: 12, fontWeight: 800, color: "#1a1a2e", flexShrink: 0,
+        }}>K</div>
+        <span style={{ fontSize: 13, color: "#b0b0c0" }}>
+          Site fait par <span style={{ color: "#a78bfa", fontWeight: 700 }}>KLIK</span>
+        </span>
+        <span style={{ fontSize: 13, color: "#45454f" }}>|</span>
+        <span style={{ fontSize: 13, color: "#b0b0c0" }}>© {new Date().getFullYear()}</span>
       </div>
     </div>
   );

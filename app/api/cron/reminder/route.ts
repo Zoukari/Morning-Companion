@@ -42,7 +42,7 @@ export async function GET(req: NextRequest) {
     ensureVapid();
     await webpush.sendNotification(
       subscription,
-      JSON.stringify({ title: "Morning Companion", body: "N'oublie pas tes adhkar." })
+      JSON.stringify({ title: "Allah First", body: "N'oublie pas tes adhkar." })
     );
     await saveReminderState({
       dateKey: currentDateKey,

@@ -27,13 +27,13 @@ const amiri = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Morning Companion",
+  title: "Allah First",
   description: "Begin your day with Allah.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Morning Companion",
+    title: "Allah First",
   },
   icons: {
     apple: "/icons/apple-touch-icon.png",
@@ -52,7 +52,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" data-theme="dark">
       <body className={`${inter.variable} ${fraunces.variable} ${amiri.variable} font-sans`}>
-        {children}
+        <div style={{ maxWidth: 480, margin: "0 auto", minHeight: "100vh", position: "relative", background: "var(--bg)" }}>
+          {children}
+        </div>
       </body>
     </html>
   );

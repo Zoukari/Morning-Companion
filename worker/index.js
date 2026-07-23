@@ -2,7 +2,7 @@
 // Runs in the service worker thread — no DOM, no imports beyond self.*.
 
 self.addEventListener("push", (event) => {
-  let data = { title: "Morning Companion", body: "N'oublie pas tes adhkar." };
+  let data = { title: "Allah First", body: "N'oublie pas tes adhkar." };
   try {
     if (event.data) data = { ...data, ...event.data.json() };
   } catch (e) {

@@ -1,4 +1,4 @@
-# Morning Companion
+# Allah First
 
 PWA de routine matinale islamique — adhkar guidés, checklist, suivi du poids,
 objectif du jour, bilan, dashboard (série/badges/niveau), mode strict.
@@ -11,7 +11,7 @@ Next.js 15 (App Router) + TypeScript + Tailwind, 100% offline (IndexedDB).
 cd morning-companion
 git init
 git add .
-git commit -m "Morning Companion v1"
+git commit -m "Allah First v1"
 ```
 Crée un repo vide sur GitHub, puis :
 ```bash
@@ -53,7 +53,7 @@ Pour que ça se déclenche automatiquement quand tu ouvres Instagram/TikTok/etc 
 5. Répète pour chaque app à intercepter.
 
 Limite connue d'iOS : une automatisation "App ouverte" ne peut pas *fermer*
-l'app cible ni bloquer son lancement — elle ouvre juste Morning Companion
+l'app cible ni bloquer son lancement — elle ouvre juste Allah First
 par-dessus. L'utilisateur doit encore appuyer sur "Retour" pour revenir à
 l'app initiale. C'est une limite d'iOS, pas de cette app.
 

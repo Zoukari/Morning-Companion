@@ -26,6 +26,7 @@ export default function Page() {
   const [showSplash, setShowSplash] = useState(true);
   const [app, setApp] = useState<AppData | null>(null);
   const [screen, setScreen] = useState<Screen>("home");
+  const [adhkarReview, setAdhkarReview] = useState(false);
   const [now, setNow] = useState(new Date());
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -146,10 +147,12 @@ export default function Page() {
     case "home":
       return <Home app={app} day={day} now={now} onStart={handleStart}
         onOpenDashboard={() => setScreen("dashboard")} onOpenSettings={() => setScreen("settings")}
-        onOpenEveningAdhkar={() => setScreen("eveningAdhkar")} />;
+        onOpenEveningAdhkar={() => setScreen("eveningAdhkar")}
+        onReviewAdhkar={() => { setDay(d => ({ ...d, adhkarIndex: 0 })); setAdhkarReview(true); setScreen("adhkar"); }} />;
     case "adhkar":
       return <Adhkar day={day} setDay={setDay} soundOn={app.settings.soundCounter}
-        onDone={() => setScreen("adhkarComplete")} onExit={() => setScreen("home")} />;
+        onDone={() => { if (adhkarReview) { setAdhkarReview(false); setScreen("home"); } else setScreen("adhkarComplete"); }}
+        onExit={() => { setAdhkarReview(false); setScreen("home"); }} />;
     case "eveningAdhkar":
       return <EveningAdhkar day={day} setDay={setDay} soundOn={app.settings.soundCounter}
         onDone={() => setScreen("home")} onExit={() => setScreen("home")} />;

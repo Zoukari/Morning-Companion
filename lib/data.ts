@@ -213,6 +213,28 @@ export const QUOTES: Quote[] = [
   { text: "Celui qui plante la patience récolte la réussite.", source: "Proverbe arabe" },
   { text: "La main qui donne est au-dessus de la main qui reçoit.", source: "Sagesse arabe" },
   { text: "Ce qui vient d'Allah, si tu patientes, arrive toujours au bon moment.", source: "Sagesse populaire" },
+
+  // Autre lot de hadiths, pour renforcer cette catégorie
+  { text: "N'entrez pas au Paradis tant que vous n'aurez pas cru, et vous ne croirez pas tant que vous ne vous aimerez pas les uns les autres.", source: "Hadith rapporté par Muslim" },
+  { text: "Celui qui soulage une difficulté à un croyant, Allah lui soulagera une difficulté le Jour du Jugement.", source: "Hadith rapporté par Muslim" },
+  { text: "Allah aide Son serviteur tant que celui-ci aide son frère.", source: "Hadith rapporté par Muslim" },
+  { text: "Tout fils d'Adam commet des péchés, et les meilleurs d'entre eux sont ceux qui se repentent.", source: "Hadith rapporté par At-Tirmidhi" },
+  { text: "La meilleure des choses, dans la modération, est la meilleure.", source: "Tradition prophétique largement citée" },
+  { text: "Trois invocations sont exaucées sans aucun doute : celle du parent, celle du voyageur, et celle de l'opprimé.", source: "Hadith rapporté par Abu Dawud et At-Tirmidhi" },
+  { text: "Quand Allah aime un serviteur, Il l'éprouve.", source: "Hadith rapporté par At-Tirmidhi" },
+  { text: "Le Paradis est entouré de choses qu'on n'aime pas faire, et l'Enfer est entouré de choses qu'on aime faire.", source: "Hadith rapporté par Muslim" },
+  { text: "Quiconque fait preuve de miséricorde, même envers un animal, Allah lui fait miséricorde.", source: "Hadith rapporté par Al-Bukhari" },
+  { text: "Le meilleur don est celui que tu donnes alors que tu es en bonne santé et attaché à tes biens.", source: "Hadith rapporté par Al-Bukhari" },
+  { text: "Craignez le mal de la langue, car elle peut jeter l'homme dans l'Enfer plus loin que l'Orient et l'Occident.", source: "Hadith rapporté par At-Tirmidhi" },
+  { text: "Celui qui croit en Allah et au Jour dernier doit honorer son voisin.", source: "Hadith rapporté par Muslim" },
+  { text: "L'aumône ne diminue jamais une richesse.", source: "Hadith rapporté par Muslim" },
+  { text: "Un bon mot est une aumône.", source: "Hadith rapporté par Al-Bukhari et Muslim" },
+  { text: "Quiconque emprunte un chemin pour chercher la science, Allah lui rend facile un chemin vers le Paradis.", source: "Hadith rapporté par Muslim" },
+  { text: "Rendez les choses faciles, ne les rendez pas difficiles ; réjouissez les gens, ne les effrayez pas.", source: "Hadith rapporté par Al-Bukhari" },
+  { text: "Ô Allah, je Te demande de me guider et de me préserver.", source: "Hadith rapporté par Muslim" },
+  { text: "Rien n'est plus lourd sur la balance des œuvres que le bon caractère.", source: "Hadith rapporté par Abu Dawud et At-Tirmidhi" },
+  { text: "Le meilleur d'entre vous après moi sera celui qui aura appris et enseigné le bien.", source: "Tradition prophétique largement citée" },
+  { text: "Ne vous détestez pas, ne vous jalousez pas, ne vous tournez pas le dos ; soyez des serviteurs d'Allah, frères entre vous.", source: "Hadith rapporté par Al-Bukhari et Muslim" },
 ];
 
 export const BADGES = [7, 30, 100, 365];

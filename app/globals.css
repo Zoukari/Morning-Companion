@@ -48,6 +48,7 @@ html, body {
   background: var(--bg);
   color: var(--text);
   overscroll-behavior-y: none;
+  overscroll-behavior-x: none;
   overflow-x: hidden;
   width: 100%;
   transition: background 0.4s ease, color 0.4s ease;

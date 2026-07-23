@@ -5,7 +5,7 @@ import { AtmosphereBackground } from "../ui";
 
 export default function Splash() {
   return (
-    <div className="mc-fade-in" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh", position: "relative" }}>
+    <div className="mc-fade-in" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh", position: "relative", overflowX: "hidden" }}>
       <AtmosphereBackground variant="splash" />
       <div style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
         <div className="mc-pulse-ring" style={{

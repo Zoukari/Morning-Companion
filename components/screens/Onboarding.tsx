@@ -13,7 +13,7 @@ export default function Onboarding({ onSubmit }: { onSubmit: (name: string) => v
   };
 
   return (
-    <div className="mc-fade-in" style={{ minHeight: "100vh", position: "relative", display: "flex", flexDirection: "column" }}>
+    <div className="mc-fade-in" style={{ minHeight: "100vh", position: "relative", overflowX: "hidden", display: "flex", flexDirection: "column" }}>
       <AtmosphereBackground />
       <div style={{ position: "relative", zIndex: 1, flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 26px" }}>
         <div className="font-arabic" dir="rtl" style={{ fontSize: 28, color: "var(--gold)", marginBottom: 14, textAlign: "center" }}>

@@ -5,7 +5,7 @@ import { AtmosphereBackground, Confetti } from "../ui";
 
 export default function RoutineDone({ onContinue, showConfetti = true }: { onContinue: () => void; showConfetti?: boolean }) {
   return (
-    <div className="mc-fade-in" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", position: "relative" }}>
+    <div className="mc-fade-in" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", position: "relative", overflowX: "hidden" }}>
       {showConfetti && <Confetti />}
       <AtmosphereBackground />
       <div style={{ position: "relative", zIndex: 1, textAlign: "center", padding: 30 }}>

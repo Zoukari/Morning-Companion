@@ -35,7 +35,7 @@ export default function Home({
   if (overallDone) cta = "Voir le tableau de bord";
 
   return (
-    <div className="mc-fade-in" style={{ minHeight: "100vh", paddingBottom: 40, position: "relative" }}>
+    <div className="mc-fade-in" style={{ minHeight: "100vh", paddingBottom: 40, position: "relative", overflowX: "hidden" }}>
       <AtmosphereBackground />
       <TopBar
         title=""
@@ -53,7 +53,7 @@ export default function Home({
           Aujourd&apos;hui est une nouvelle occasion<br />de se rapprocher d&apos;Allah.
         </div>
 
-        <div key={`enc-${quoteIdx}`} className="mc-fade-in" style={{ marginTop: 12, fontSize: 17, color: "var(--gold)", lineHeight: 1.45, fontWeight: 600 }}>
+        <div key={`enc-${quoteIdx}`} className="mc-fade-in" style={{ marginTop: 12, fontSize: 19, color: "var(--gold)", lineHeight: 1.4, fontWeight: 700 }}>
           {encouragement}
         </div>
 

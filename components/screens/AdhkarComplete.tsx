@@ -4,7 +4,7 @@ import { AtmosphereBackground, Confetti } from "../ui";
 
 export default function AdhkarComplete({ onContinue }: { onContinue: () => void }) {
   return (
-    <div className="mc-fade-in" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", position: "relative" }}>
+    <div className="mc-fade-in" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", position: "relative", overflowX: "hidden" }}>
       <Confetti />
       <AtmosphereBackground />
       <div style={{ position: "relative", zIndex: 1, textAlign: "center", padding: 30 }}>

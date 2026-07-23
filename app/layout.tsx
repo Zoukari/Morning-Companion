@@ -36,6 +36,7 @@ export const metadata: Metadata = {
     title: "Allah First",
   },
   icons: {
+    icon: "/icons/icon-192.png",
     apple: "/icons/apple-touch-icon.png",
   },
 };
@@ -52,7 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" data-theme="dark">
       <body className={`${inter.variable} ${fraunces.variable} ${amiri.variable} font-sans`}>
-        <div style={{ maxWidth: 480, margin: "0 auto", minHeight: "100vh", position: "relative", background: "var(--bg)" }}>
+        <div style={{ maxWidth: 480, margin: "0 auto", minHeight: "100vh", position: "relative", background: "var(--bg)", transform: "translateZ(0)" }}>
           {children}
         </div>
       </body>

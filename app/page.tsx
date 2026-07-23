@@ -53,6 +53,18 @@ export default function Page() {
 
     const splashTimer = setTimeout(() => setShowSplash(false), 2000);
     const clock = setInterval(() => setNow(new Date()), 30000);
+
+    // if a newer service worker takes over mid-session, reload once to pick
+    // up the new version instead of silently keeping stale cached assets
+    if ("serviceWorker" in navigator) {
+      let reloaded = false;
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (reloaded) return;
+        reloaded = true;
+        window.location.reload();
+      });
+    }
+
     return () => { clearTimeout(splashTimer); clearInterval(clock); };
   }, []);
 

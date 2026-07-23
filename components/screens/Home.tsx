@@ -149,6 +149,24 @@ export default function Home({
             <span style={{ color: "var(--text-faint)" }}>· {day.eveningAdhkarIndex}/{EVENING_ADHKAR.length}</span>
           )}
         </button>
+
+        <div style={{ display: "flex", justifyContent: "center", marginTop: 24 }}>
+          <div style={{
+            display: "flex", alignItems: "center", gap: 10, padding: "8px 16px",
+            borderRadius: 999, background: "#0d0d14", border: "1px solid rgba(255,255,255,0.08)",
+          }}>
+            <div style={{
+              width: 20, height: 20, borderRadius: "50%", background: "#c9a8f5",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: 11, fontWeight: 700, color: "#1a1a2e", flexShrink: 0,
+            }}>K</div>
+            <span style={{ fontSize: 12, color: "#a8a8b8" }}>
+              Site par <span style={{ color: "#a78bfa", fontWeight: 700 }}>KLIK</span>
+            </span>
+            <span style={{ fontSize: 12, color: "#55555f" }}>|</span>
+            <span style={{ fontSize: 12, color: "#a8a8b8" }}>© {new Date().getFullYear()}</span>
+          </div>
+        </div>
       </div>
     </div>
   );

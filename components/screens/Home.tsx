@@ -53,7 +53,7 @@ export default function Home({
           Aujourd&apos;hui est une nouvelle occasion<br />de se rapprocher d&apos;Allah.
         </div>
 
-        <div key={`enc-${quoteIdx}`} className="mc-fade-in" style={{ marginTop: 10, fontSize: 14, color: "var(--gold)", lineHeight: 1.4, fontWeight: 500 }}>
+        <div key={`enc-${quoteIdx}`} className="mc-fade-in" style={{ marginTop: 12, fontSize: 17, color: "var(--gold)", lineHeight: 1.45, fontWeight: 600 }}>
           {encouragement}
         </div>
 

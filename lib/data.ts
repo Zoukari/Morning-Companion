@@ -44,6 +44,32 @@ export const ADHKAR: AdhkarItem[] = [
     arabic: "لا إله إلا الله وحده لا شريك له له الملك وله الحمد وهو على كل شيء قدير" },
 ];
 
+// Azkar du soir — facultatif, même mécanique que le matin mais contenu propre au soir.
+export const EVENING_ADHKAR: AdhkarItem[] = [
+  { id: "ev-kursi", title: "Ayat al-Kursi", repetitions: 1,
+    arabic: "اللّٰهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ" },
+  { id: "ev-ikhlas", title: "Sourate Al-Ikhlas", repetitions: 3,
+    arabic: "قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ" },
+  { id: "ev-falaq", title: "Sourate Al-Falaq", repetitions: 3,
+    arabic: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِنْ شَرِّ مَا خَلَقَ ۝ وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ" },
+  { id: "ev-nas", title: "Sourate An-Nas", repetitions: 3,
+    arabic: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَٰهِ النَّاسِ ۝ مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۝ مِنَ الْجِنَّةِ وَالنَّاسِ" },
+  { id: "ev-amsayna", title: "Amsayna wa amsal-mulku lillah", repetitions: 1,
+    arabic: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ" },
+  { id: "ev-sayyid", title: "Sayyid al-Istighfar (soir)", repetitions: 1,
+    arabic: "اللهم أنت ربي لا إله إلا أنت خلقتني وأنا عبدك وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شر ما صنعت، أبوء لك بنعمتك علي، وأبوء بذنبي فاغفر لي فإنه لا يغفر الذنوب إلا أنت" },
+  { id: "ev-amsayna-bika", title: "Allahumma bika amsayna", repetitions: 1,
+    arabic: "اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ الْمَصِيرُ" },
+  { id: "ev-kalimat", title: "Protection par les paroles d'Allah", repetitions: 3,
+    arabic: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ" },
+  { id: "ev-hamm-hazan", title: "Protection contre soucis et tristesse", repetitions: 3,
+    arabic: "اللهم إني أعوذ بك من الهم والحزن وأعوذ بك من العجز والكسل وأعوذ بك من الجبن والبخل وأعوذ بك من غلبة الدين وقهر الرجال" },
+  { id: "ev-afiya", title: "Demande de bien-être", repetitions: 1,
+    arabic: "اللهم إني أسألك العافية في الدنيا والآخرة" },
+  { id: "ev-tasbih-100", title: "Subhanallahi wa bihamdih", repetitions: 100, isCounter: true,
+    arabic: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ" },
+];
+
 export type RoutineTask = { id: string; label: string };
 
 export const ROUTINE_TASKS: RoutineTask[] = [

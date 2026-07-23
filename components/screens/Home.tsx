@@ -1,15 +1,15 @@
 "use client";
 import React from "react";
-import { Settings as SettingsIcon, Check, ArrowRight, BarChart3 } from "lucide-react";
+import { Settings as SettingsIcon, Check, ArrowRight, BarChart3, Moon } from "lucide-react";
 import { AppData, DayData } from "@/lib/types";
-import { ADHKAR, QUOTES } from "@/lib/data";
+import { ADHKAR, EVENING_ADHKAR, QUOTES } from "@/lib/data";
 import { AtmosphereBackground, ProgressBar, TopBar } from "../ui";
 
 export default function Home({
-  app, day, now, onStart, onOpenDashboard, onOpenSettings,
+  app, day, now, onStart, onOpenDashboard, onOpenSettings, onOpenEveningAdhkar,
 }: {
   app: AppData; day: DayData; now: Date;
-  onStart: () => void; onOpenDashboard: () => void; onOpenSettings: () => void;
+  onStart: () => void; onOpenDashboard: () => void; onOpenSettings: () => void; onOpenEveningAdhkar: () => void;
 }) {
   const adhkarPct = day.adhkarCompleted ? 100 : Math.round((day.adhkarIndex / ADHKAR.length) * 100);
   const overallDone = day.adhkarCompleted && day.routineCompleted;
@@ -83,6 +83,20 @@ export default function Home({
           display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
         }}>
           <BarChart3 size={15} /> Tableau de bord · série de {app.streak} jour{app.streak > 1 ? "s" : ""}
+        </button>
+
+        <button onClick={onOpenEveningAdhkar} className="mc-btn" style={{
+          marginTop: 10, width: "100%", padding: "13px", borderRadius: 16, border: "1px solid var(--border)",
+          background: "transparent", color: "var(--text-dim)", fontSize: 13, cursor: "pointer",
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+        }}>
+          <Moon size={15} color={day.eveningAdhkarCompleted ? "var(--emerald)" : "var(--text-dim)"} />
+          Azkar du soir (facultatif)
+          {day.eveningAdhkarCompleted ? (
+            <Check size={13} color="var(--emerald)" />
+          ) : (
+            <span style={{ color: "var(--text-faint)" }}>· {day.eveningAdhkarIndex}/{EVENING_ADHKAR.length}</span>
+          )}
         </button>
       </div>
     </div>

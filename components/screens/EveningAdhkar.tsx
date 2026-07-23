@@ -2,14 +2,17 @@
 import React, { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import { Check, SkipBack } from "lucide-react";
 import { DayData } from "@/lib/types";
-import { ADHKAR, BACKGROUND_SETS, daySetIndexForToday, backgroundFor } from "@/lib/data";
+import { EVENING_ADHKAR, ADHKAR, BACKGROUND_SETS, daySetIndexForToday, backgroundFor } from "@/lib/data";
 import { vibrate, playTick } from "@/lib/storage";
 import { ProgressBar, TopBar } from "../ui";
 
-const HOLD_DELAY = 320;   // ms before auto-repeat kicks in
-const HOLD_INTERVAL = 90; // ms between auto increments while holding
+const HOLD_DELAY = 320;
+const HOLD_INTERVAL = 90;
+// offset so the evening screens don't show the exact same photos, in the same
+// order, as the morning ones did earlier that day
+const BG_OFFSET = ADHKAR.length;
 
-export default function Adhkar({
+export default function EveningAdhkar({
   day, setDay, onDone, onExit, soundOn,
 }: {
   day: DayData;
@@ -18,12 +21,12 @@ export default function Adhkar({
   onExit: () => void;
   soundOn: boolean;
 }) {
-  const idx = Math.min(day.adhkarIndex, ADHKAR.length - 1);
-  const item = ADHKAR[idx];
-  const count = day.adhkarRepCounts[item.id] || 0;
+  const idx = Math.min(day.eveningAdhkarIndex, EVENING_ADHKAR.length - 1);
+  const item = EVENING_ADHKAR[idx];
+  const count = day.eveningAdhkarRepCounts[item.id] || 0;
   const [burst, setBurst] = useState(false);
   const todaySet = useMemo(() => BACKGROUND_SETS[daySetIndexForToday()], []);
-  const bgUrl = backgroundFor(todaySet, idx);
+  const bgUrl = backgroundFor(todaySet, BG_OFFSET + idx);
 
   const advancedRef = useRef(false);
   const liveCountRef = useRef(count);
@@ -48,11 +51,11 @@ export default function Adhkar({
     setBurst(true);
     setTimeout(() => setBurst(false), 400);
     setTimeout(() => {
-      if (idx + 1 >= ADHKAR.length) {
-        setDay(d => ({ ...d, adhkarCompleted: true }));
+      if (idx + 1 >= EVENING_ADHKAR.length) {
+        setDay(d => ({ ...d, eveningAdhkarCompleted: true }));
         onDone();
       } else {
-        setDay(d => ({ ...d, adhkarIndex: idx + 1 }));
+        setDay(d => ({ ...d, eveningAdhkarIndex: idx + 1 }));
       }
     }, 380);
   }, [idx, setDay, onDone]);
@@ -60,7 +63,7 @@ export default function Adhkar({
   const goPrevious = useCallback(() => {
     if (idx === 0) return;
     clearHold();
-    setDay(d => ({ ...d, adhkarIndex: idx - 1 }));
+    setDay(d => ({ ...d, eveningAdhkarIndex: idx - 1 }));
   }, [idx, setDay]);
 
   const increment = useCallback(() => {
@@ -69,7 +72,7 @@ export default function Adhkar({
     liveCountRef.current = newCount;
     vibrate(item.isCounter ? 6 : 15);
     if (soundOn && item.isCounter) playTick();
-    setDay(d => ({ ...d, adhkarRepCounts: { ...d.adhkarRepCounts, [item.id]: newCount } }));
+    setDay(d => ({ ...d, eveningAdhkarRepCounts: { ...d.eveningAdhkarRepCounts, [item.id]: newCount } }));
     if (newCount >= item.repetitions) {
       advancedRef.current = true;
       advance();
@@ -79,7 +82,7 @@ export default function Adhkar({
   const tap = () => increment();
 
   const startHold = () => {
-    if (!item.isCounter) return; // hold-to-repeat only makes sense for the 100x counter
+    if (!item.isCounter) return;
     increment();
     holdTimeout.current = setTimeout(() => {
       holdInterval.current = setInterval(() => {
@@ -89,7 +92,7 @@ export default function Adhkar({
     }, HOLD_DELAY);
   };
 
-  const pct = Math.round((idx / ADHKAR.length) * 100 + (count / item.repetitions) * (100 / ADHKAR.length));
+  const pct = Math.round((idx / EVENING_ADHKAR.length) * 100 + (count / item.repetitions) * (100 / EVENING_ADHKAR.length));
 
   return (
     <div style={{ minHeight: "100vh", position: "relative", overflow: "hidden" }}>
@@ -103,7 +106,7 @@ export default function Adhkar({
 
       <div style={{ position: "relative", zIndex: 1 }}>
         <TopBar
-          title={`${idx + 1} / ${ADHKAR.length}`}
+          title={`Soir · ${idx + 1} / ${EVENING_ADHKAR.length}`}
           onBack={onExit}
           right={idx > 0 ? (
             <button onClick={goPrevious} className="mc-btn" style={{ background: "none", border: "none", color: "var(--text-dim)", cursor: "pointer", padding: 6 }} aria-label="Hadith précédent">
@@ -137,7 +140,7 @@ export default function Adhkar({
                 }}
               >
                 <div className="font-display" style={{ fontSize: 30, color: "var(--emerald)" }}>
-                  {count}<span style={{ fontSize: 16, color: "var(--text-dim)" }}> /100</span>
+                  {count}<span style={{ fontSize: 16, color: "var(--text-dim)" }}> /{item.repetitions}</span>
                 </div>
               </button>
               <div style={{ marginTop: 16, fontSize: 12, color: "var(--text-faint)" }}>

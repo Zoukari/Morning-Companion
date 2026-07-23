@@ -9,7 +9,7 @@ export async function loadAppData(): Promise<AppData> {
     const stored = await get(KEY);
     if (stored) {
       const parsed: AppData = typeof stored === "string" ? JSON.parse(stored) : stored;
-      if (!parsed.days[todayKey()]) parsed.days[todayKey()] = defaultDay();
+      parsed.days[todayKey()] = { ...defaultDay(), ...(parsed.days[todayKey()] || {}) };
       return { ...defaultApp(), ...parsed };
     }
   } catch (e) {

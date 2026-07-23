@@ -7,6 +7,7 @@ import { detectTimeZone, syncReminderState } from "@/lib/push";
 import Splash from "@/components/screens/Splash";
 import Home from "@/components/screens/Home";
 import Adhkar from "@/components/screens/Adhkar";
+import EveningAdhkar from "@/components/screens/EveningAdhkar";
 import AdhkarComplete from "@/components/screens/AdhkarComplete";
 import Routine from "@/components/screens/Routine";
 import WeightScreen from "@/components/screens/Weight";
@@ -17,7 +18,7 @@ import Dashboard from "@/components/screens/Dashboard";
 import SettingsScreen from "@/components/screens/Settings";
 
 type Screen =
-  | "home" | "adhkar" | "adhkarComplete" | "routine" | "weight" | "goal"
+  | "home" | "adhkar" | "adhkarComplete" | "eveningAdhkar" | "routine" | "weight" | "goal"
   | "routineDone" | "alreadyDone" | "dashboard" | "reflection" | "settings";
 
 export default function Page() {
@@ -144,10 +145,14 @@ export default function Page() {
   switch (screen) {
     case "home":
       return <Home app={app} day={day} now={now} onStart={handleStart}
-        onOpenDashboard={() => setScreen("dashboard")} onOpenSettings={() => setScreen("settings")} />;
+        onOpenDashboard={() => setScreen("dashboard")} onOpenSettings={() => setScreen("settings")}
+        onOpenEveningAdhkar={() => setScreen("eveningAdhkar")} />;
     case "adhkar":
       return <Adhkar day={day} setDay={setDay} soundOn={app.settings.soundCounter}
         onDone={() => setScreen("adhkarComplete")} onExit={() => setScreen("home")} />;
+    case "eveningAdhkar":
+      return <EveningAdhkar day={day} setDay={setDay} soundOn={app.settings.soundCounter}
+        onDone={() => setScreen("home")} onExit={() => setScreen("home")} />;
     case "adhkarComplete":
       return <AdhkarComplete onContinue={() => setScreen("routine")} />;
     case "routine":
@@ -164,7 +169,7 @@ export default function Page() {
     case "alreadyDone":
       return <RoutineDone showConfetti={false} onContinue={() => setScreen("home")} />;
     case "dashboard":
-      return <Dashboard app={app} onExit={() => setScreen("home")} onReflection={() => setScreen("reflection")} />;
+      return <Dashboard app={app} setApp={setApp as any} onExit={() => setScreen("home")} onReflection={() => setScreen("reflection")} />;
     case "reflection":
       return <Reflection day={day} setDay={setDay} onExit={() => setScreen("dashboard")} />;
     case "settings":

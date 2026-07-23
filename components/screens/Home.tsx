@@ -185,12 +185,17 @@ export default function Home({
           )}
         </button>
 
-        {!klikFixed && <KlikBadge />}
+        {!klikFixed && <KlikBadgeWrapper />}
       </div>
 
       {klikFixed && (
-        <div style={{ position: "fixed", bottom: 18, left: "50%", transform: "translateX(-50%)", zIndex: 50 }}>
-          <KlikBadge />
+        <div style={{
+          position: "fixed", bottom: 14, left: 0, right: 0, zIndex: 50,
+          display: "flex", justifyContent: "center", pointerEvents: "none",
+        }}>
+          <div style={{ pointerEvents: "all" }}>
+            <KlikBadge />
+          </div>
         </div>
       )}
     </div>
@@ -199,29 +204,36 @@ export default function Home({
 
 function KlikBadge() {
   return (
-    <div style={{ display: "flex", justifyContent: "center", marginTop: 24 }}>
-      <a
-        href="https://klikdj.com" target="_blank" rel="noopener noreferrer"
-        style={{
-          display: "flex", alignItems: "center", gap: 10, padding: "9px 18px",
-          borderRadius: 999, background: "#11111c",
-          border: "1px solid rgba(167,139,250,0.35)",
-          boxShadow: "0 4px 24px rgba(0,0,0,0.4)",
-          textDecoration: "none", cursor: "pointer",
-        }}
-      >
-        <div style={{
-          width: 22, height: 22, borderRadius: "50%",
-          background: "linear-gradient(135deg, #d9c5f9, #b79cf0)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 12, fontWeight: 800, color: "#1a1a2e", flexShrink: 0,
-        }}>K</div>
-        <span style={{ fontSize: 13, color: "#b0b0c0" }}>
-          Site fait par <span style={{ color: "#a78bfa", fontWeight: 700 }}>KLIK</span>
-        </span>
-        <span style={{ fontSize: 13, color: "#45454f" }}>|</span>
-        <span style={{ fontSize: 13, color: "#b0b0c0" }}>© {new Date().getFullYear()}</span>
-      </a>
+    <a
+      href="https://klikdj.com" target="_blank" rel="noopener noreferrer"
+      style={{
+        display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 16px",
+        borderRadius: 999, background: "#11111c",
+        border: "1px solid rgba(167,139,250,0.35)",
+        boxShadow: "0 4px 24px rgba(0,0,0,0.5)",
+        textDecoration: "none", cursor: "pointer", whiteSpace: "nowrap",
+      }}
+    >
+      <div style={{
+        width: 20, height: 20, borderRadius: "50%",
+        background: "linear-gradient(135deg, #d9c5f9, #b79cf0)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        fontSize: 11, fontWeight: 800, color: "#1a1a2e", flexShrink: 0,
+      }}>K</div>
+      <span style={{ fontSize: 12, color: "#b0b0c0", whiteSpace: "nowrap" }}>
+        Site fait par <strong style={{ color: "#a78bfa" }}>KLIK</strong>
+      </span>
+      <span style={{ fontSize: 12, color: "#45454f" }}>|</span>
+      <span style={{ fontSize: 12, color: "#b0b0c0" }}>© {new Date().getFullYear()}</span>
+    </a>
+  );
+}
+
+// Wrapper shown inline at footer (with spacing)
+function KlikBadgeWrapper() {
+  return (
+    <div style={{ display: "flex", justifyContent: "center", marginTop: 28, paddingBottom: 8 }}>
+      <KlikBadge />
     </div>
   );
 }

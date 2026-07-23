@@ -53,7 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" data-theme="dark">
       <body className={`${inter.variable} ${fraunces.variable} ${amiri.variable} font-sans`}>
-        <div style={{ maxWidth: 480, margin: "0 auto", minHeight: "100vh", position: "relative", background: "var(--bg)", transform: "translateZ(0)" }}>
+        <div style={{ maxWidth: 480, margin: "0 auto", minHeight: "100vh", position: "relative", background: "var(--bg)" }}>
           {children}
         </div>
       </body>

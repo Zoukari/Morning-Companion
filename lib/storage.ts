@@ -10,7 +10,8 @@ export async function loadAppData(): Promise<AppData> {
     if (stored) {
       const parsed: AppData = typeof stored === "string" ? JSON.parse(stored) : stored;
       parsed.days[todayKey()] = { ...defaultDay(), ...(parsed.days[todayKey()] || {}) };
-      return { ...defaultApp(), ...parsed };
+      const defaults = defaultApp();
+      return { ...defaults, ...parsed, settings: { ...defaults.settings, ...(parsed.settings || {}) } };
     }
   } catch (e) {
     // fresh install, or IndexedDB unavailable (private browsing) — fall back to defaults

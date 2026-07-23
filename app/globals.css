@@ -57,6 +57,7 @@ html, body {
 
 .mc-fade-in { animation: mcFadeIn 0.5s ease both; }
 @keyframes mcFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes mcRingDrain { from { stroke-dashoffset: 0; } to { stroke-dashoffset: 56.5487; } }
 
 .mc-scale-tap:active { transform: scale(0.96); }
 .mc-btn { transition: transform 0.15s ease, background 0.2s ease, opacity 0.2s ease; }

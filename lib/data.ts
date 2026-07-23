@@ -196,6 +196,31 @@ export const QUOTES: Quote[] = [
 
 export const BADGES = [7, 30, 100, 365];
 
+// Personalized reminders shown on Home, right after the greeting. {name} is
+// replaced with the user's first name. Each one nudges toward a different
+// everyday good deed — dhikr, sadaqa, salat, kindness, etc. — kept as gentle
+// encouragement rather than exact hadith wording, to avoid misattribution.
+export const ENCOURAGEMENTS = [
+  "Ya {name}, aucune journée n'est meilleure que celle où l'on invoque Allah.",
+  "Ya {name}, un sourire offert à quelqu'un aujourd'hui compte comme une aumône.",
+  "Ya {name}, même une petite sadaqa donnée avec sincérité a une grande valeur auprès d'Allah.",
+  "Ya {name}, n'oublie pas l'istighfar aujourd'hui — demander pardon adoucit le cœur.",
+  "Ya {name}, prends un instant pour appeler tes parents ou prendre de leurs nouvelles.",
+  "Ya {name}, garder la langue douce aujourd'hui est une forme de piété.",
+  "Ya {name}, une prière accomplie à son heure vaut mieux qu'une prière retardée.",
+  "Ya {name}, lire quelques versets du Coran aujourd'hui illuminera ta journée.",
+  "Ya {name}, la patience face à une contrariété aujourd'hui sera comptée pour toi.",
+  "Ya {name}, pense à remercier Allah pour ce que tu as déjà, avant de demander plus.",
+  "Ya {name}, une bonne parole envers quelqu'un aujourd'hui ne coûte rien et rapporte beaucoup.",
+  "Ya {name}, garder le lien avec un proche que tu as délaissé est une œuvre qui rapproche d'Allah.",
+  "Ya {name}, place ta confiance en Allah pour ce que tu ne contrôles pas aujourd'hui.",
+  "Ya {name}, essaie de ne pas dire un mot que tu regretterais ce soir.",
+  "Ya {name}, aide quelqu'un aujourd'hui sans qu'il ait besoin de le demander.",
+  "Ya {name}, chaque pas vers la mosquée ou vers le bien est enregistré.",
+  "Ya {name}, ce n'est jamais trop tard dans la journée pour se rappeler d'Allah.",
+  "Ya {name}, la sincérité dans les petites choses vaut plus que l'apparence dans les grandes.",
+];
+
 // The user's own reference photos, used as-is (no color extraction, no filters).
 // Split into 6 groups; one group is used per calendar day, cycling through it
 // photo-per-adhkar within that day.

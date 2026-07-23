@@ -5,6 +5,7 @@ import { loadAppData, saveAppData } from "@/lib/storage";
 import { detectTimeZone, syncReminderState } from "@/lib/push";
 
 import Splash from "@/components/screens/Splash";
+import Onboarding from "@/components/screens/Onboarding";
 import Home from "@/components/screens/Home";
 import Adhkar from "@/components/screens/Adhkar";
 import EveningAdhkar from "@/components/screens/EveningAdhkar";
@@ -134,6 +135,9 @@ export default function Page() {
   }, [setDay]);
 
   if (showSplash || !app) return <Splash />;
+  if (!app.settings.userName) {
+    return <Onboarding onSubmit={(name) => setApp(a => (a ? { ...a, settings: { ...a.settings, userName: name } } : a))} />;
+  }
 
   const day = app.days[todayKey()] || defaultDay();
 

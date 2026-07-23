@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Bell, BellOff, Clock, ShieldCheck, Volume2, VolumeX, Globe, Sun, Moon, RotateCcw, Zap } from "lucide-react";
+import { Bell, BellOff, Clock, ShieldCheck, Volume2, VolumeX, Globe, Sun, Moon, RotateCcw, Zap, User } from "lucide-react";
 import { AppData, Settings as SettingsType } from "@/lib/types";
 import { enablePush } from "@/lib/push";
 import { Toggle, TopBar } from "../ui";
@@ -49,6 +49,18 @@ export default function SettingsScreen({
     <div className="mc-fade-in" style={{ minHeight: "100vh" }}>
       <TopBar title="Paramètres" onBack={onExit} />
       <div style={{ padding: "6px 20px", display: "flex", flexDirection: "column", gap: 10 }}>
+
+        <div className="mc-card" style={{ borderRadius: 16, padding: 16 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
+            <User size={17} color="var(--text-dim)" />
+            <div style={{ fontSize: 14 }}>Ton prénom</div>
+          </div>
+          <input
+            type="text" placeholder="Ton prénom" value={s.userName}
+            onChange={e => upd({ userName: e.target.value })}
+            style={{ width: "100%", background: "var(--bg-elevated)", border: "1px solid var(--border)", borderRadius: 8, color: "var(--text)", padding: "10px 12px", fontSize: 14 }}
+          />
+        </div>
 
         <div className="mc-card" style={{ borderRadius: 16, padding: 16 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>

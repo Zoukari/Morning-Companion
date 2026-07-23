@@ -14,6 +14,7 @@ export type DayData = {
 
 export type Settings = {
   language: "fr" | "en" | "ar";
+  userName: string;
   notifWindowStart: string;
   notifWindowEnd: string;
   timeZone: string;
@@ -72,6 +73,7 @@ export const defaultApp = (): AppData => ({
   goalWeight: null,
   settings: {
     language: "fr",
+    userName: "",
     notifWindowStart: "05:00",
     notifWindowEnd: "06:30",
     timeZone: "",

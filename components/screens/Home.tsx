@@ -3,7 +3,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Settings as SettingsIcon, Check, ArrowRight, BarChart3, Moon, BookOpen } from "lucide-react";
 import { AppData, DayData } from "@/lib/types";
-import { ADHKAR, EVENING_ADHKAR, QUOTES } from "@/lib/data";
+import { ADHKAR, EVENING_ADHKAR, QUOTES, ENCOURAGEMENTS } from "@/lib/data";
 import { AtmosphereBackground, ProgressBar, TopBar } from "../ui";
 
 export default function Home({
@@ -21,6 +21,8 @@ export default function Home({
     return () => clearInterval(timer);
   }, []);
   const quote = QUOTES[quoteIdx];
+  const encouragement = ENCOURAGEMENTS[quoteIdx % ENCOURAGEMENTS.length].replace("{name}", app.settings.userName);
+  const QUOTE_INTERVAL_MS = 10000;
   const adhkarPct = day.adhkarCompleted ? 100 : Math.round((day.adhkarIndex / ADHKAR.length) * 100);
   const overallDone = day.adhkarCompleted && day.routineCompleted;
   const pct = overallDone ? 100 : day.adhkarCompleted ? 55 : Math.round(adhkarPct * 0.5);
@@ -51,6 +53,10 @@ export default function Home({
           Aujourd&apos;hui est une nouvelle occasion<br />de se rapprocher d&apos;Allah.
         </div>
 
+        <div key={`enc-${quoteIdx}`} className="mc-fade-in" style={{ marginTop: 10, fontSize: 14, color: "var(--gold)", lineHeight: 1.4, fontWeight: 500 }}>
+          {encouragement}
+        </div>
+
         <div style={{ display: "flex", gap: 10, marginTop: 24, fontSize: 13, color: "var(--text-dim)" }}>
           <span style={{ textTransform: "capitalize" }}>{dateStr}</span>
           <span>·</span>
@@ -73,16 +79,35 @@ export default function Home({
           </div>
         </div>
 
-        <div key={quoteIdx} className="mc-fade-in" style={{ marginTop: 18, padding: "0 4px" }}>
+        <div key={quoteIdx} className="mc-fade-in" style={{
+          marginTop: 18, padding: 18, borderRadius: 18,
+          background: "#ffffff", border: "1px solid rgba(0,0,0,0.06)",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.12)", position: "relative",
+        }}>
+          <div style={{ position: "absolute", top: 12, right: 12 }}>
+            <svg width={22} height={22} viewBox="0 0 22 22">
+              <circle cx={11} cy={11} r={9} fill="none" stroke="#e5e0d8" strokeWidth={2.5} />
+              <circle
+                key={quoteIdx}
+                cx={11} cy={11} r={9} fill="none" stroke="#C8A75D" strokeWidth={2.5}
+                strokeDasharray={2 * Math.PI * 9}
+                style={{
+                  transform: "rotate(-90deg)", transformOrigin: "50% 50%",
+                  animation: `mcRingDrain ${QUOTE_INTERVAL_MS}ms linear forwards`,
+                }}
+              />
+            </svg>
+          </div>
+
           {quote.arabic && (
-            <div className="font-arabic" dir="rtl" style={{ fontSize: 17, color: "var(--gold)", lineHeight: 1.7, marginBottom: 6, textAlign: "right" }}>
+            <div className="font-arabic" dir="rtl" style={{ fontSize: 17, color: "#8a6a2f", lineHeight: 1.7, marginBottom: 8, textAlign: "right", paddingRight: 28 }}>
               {quote.arabic}
             </div>
           )}
-          <div style={{ fontSize: 13, color: "var(--text-dim)", fontStyle: "italic", lineHeight: 1.5 }}>
+          <div style={{ fontSize: 13, color: "#3a3a3a", fontStyle: "italic", lineHeight: 1.5, paddingRight: quote.arabic ? 0 : 28 }}>
             « {quote.text} »
           </div>
-          <div style={{ marginTop: 4, fontSize: 11, color: "var(--text-faint)" }}>— {quote.source}</div>
+          <div style={{ marginTop: 6, fontSize: 11, color: "#8a8a85" }}>— {quote.source}</div>
         </div>
 
         <button onClick={onStart} className="mc-btn mc-scale-tap" style={{

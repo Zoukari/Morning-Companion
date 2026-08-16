@@ -11,6 +11,9 @@ export type DayData = {
   iftarAdhkarIndex: number;
   iftarAdhkarRepCounts: Record<string, number>;
   iftarAdhkarCompleted: boolean;
+  travelAdhkarIndex: number;
+  travelAdhkarRepCounts: Record<string, number>;
+  travelAdhkarCompleted: boolean;
   routineChecks: Record<string, boolean>;
   routineCompleted: boolean;
   weight: number | null;
@@ -56,6 +59,9 @@ export const defaultDay = (): DayData => ({
   iftarAdhkarIndex: 0,
   iftarAdhkarRepCounts: {},
   iftarAdhkarCompleted: false,
+  travelAdhkarIndex: 0,
+  travelAdhkarRepCounts: {},
+  travelAdhkarCompleted: false,
   routineChecks: {},
   routineCompleted: false,
   weight: null,

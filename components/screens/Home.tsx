@@ -1,18 +1,19 @@
 "use client";
 import React from "react";
 import { useEffect, useState } from "react";
-import { Settings as SettingsIcon, Check, ArrowRight, BarChart3, Moon, BookOpen, Star, Sunset } from "lucide-react";
+import { Settings as SettingsIcon, Check, ArrowRight, BarChart3, Moon, BookOpen, Star, Sunset, Plane } from "lucide-react";
 import { AppData, DayData } from "@/lib/types";
-import { ADHKAR, EVENING_ADHKAR, QIYAM_ADHKAR, IFTAR_ADHKAR, QUOTES, ENCOURAGEMENTS } from "@/lib/data";
+import { ADHKAR, EVENING_ADHKAR, QIYAM_ADHKAR, IFTAR_ADHKAR, TRAVEL_ADHKAR, QUOTES, ENCOURAGEMENTS } from "@/lib/data";
 import { toArabicName } from "@/lib/transliterate";
 import { AtmosphereBackground, ProgressBar, TopBar } from "../ui";
 
 export default function Home({
-  app, day, now, onStart, onOpenDashboard, onOpenSettings, onOpenEveningAdhkar, onOpenQiyamAdhkar, onOpenIftarAdhkar, onReviewAdhkar,
+  app, day, now, onStart, onOpenDashboard, onOpenSettings, onOpenEveningAdhkar, onOpenQiyamAdhkar, onOpenIftarAdhkar, onOpenTravelAdhkar, onReviewAdhkar,
 }: {
   app: AppData; day: DayData; now: Date;
   onStart: () => void; onOpenDashboard: () => void; onOpenSettings: () => void;
-  onOpenEveningAdhkar: () => void; onOpenQiyamAdhkar: () => void; onOpenIftarAdhkar: () => void; onReviewAdhkar: () => void;
+  onOpenEveningAdhkar: () => void; onOpenQiyamAdhkar: () => void; onOpenIftarAdhkar: () => void;
+  onOpenTravelAdhkar: () => void; onReviewAdhkar: () => void;
 }) {
   const [quoteIdx, setQuoteIdx] = useState(() => Math.floor(Math.random() * QUOTES.length));
   const [klikFixed, setKlikFixed] = useState(true);
@@ -182,6 +183,20 @@ export default function Home({
             <Check size={13} color="var(--emerald)" />
           ) : (
             <span style={{ color: "var(--text-faint)" }}>· {day.iftarAdhkarIndex}/{IFTAR_ADHKAR.length}</span>
+          )}
+        </button>
+
+        <button onClick={onOpenTravelAdhkar} className="mc-btn" style={{
+          marginTop: 10, width: "100%", padding: "13px", borderRadius: 16, border: "1px solid rgba(56,189,248,0.4)",
+          background: "rgba(56,189,248,0.10)", color: "var(--text)", fontSize: 13, cursor: "pointer",
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontWeight: 500,
+        }}>
+          <Plane size={15} color="#38bdf8" />
+          Douaas du voyage (facultatif)
+          {day.travelAdhkarCompleted ? (
+            <Check size={13} color="var(--emerald)" />
+          ) : (
+            <span style={{ color: "var(--text-faint)" }}>· {day.travelAdhkarIndex}/{TRAVEL_ADHKAR.length}</span>
           )}
         </button>
 

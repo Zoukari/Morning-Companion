@@ -11,6 +11,7 @@ import Adhkar from "@/components/screens/Adhkar";
 import EveningAdhkar from "@/components/screens/EveningAdhkar";
 import QiyamAdhkar from "@/components/screens/QiyamAdhkar";
 import IftarAdhkar from "@/components/screens/IftarAdhkar";
+import TravelAdhkar from "@/components/screens/TravelAdhkar";
 import AdhkarComplete from "@/components/screens/AdhkarComplete";
 import Routine from "@/components/screens/Routine";
 import WeightScreen from "@/components/screens/Weight";
@@ -21,7 +22,7 @@ import Dashboard from "@/components/screens/Dashboard";
 import SettingsScreen from "@/components/screens/Settings";
 
 type Screen =
-  | "home" | "adhkar" | "adhkarComplete" | "eveningAdhkar" | "qiyamAdhkar" | "iftarAdhkar" | "routine" | "weight" | "goal"
+  | "home" | "adhkar" | "adhkarComplete" | "eveningAdhkar" | "qiyamAdhkar" | "iftarAdhkar" | "travelAdhkar" | "routine" | "weight" | "goal"
   | "routineDone" | "alreadyDone" | "dashboard" | "reflection" | "settings";
 
 export default function Page() {
@@ -168,6 +169,7 @@ export default function Page() {
         onOpenEveningAdhkar={() => setScreen("eveningAdhkar")}
         onOpenQiyamAdhkar={() => setScreen("qiyamAdhkar")}
         onOpenIftarAdhkar={() => setScreen("iftarAdhkar")}
+        onOpenTravelAdhkar={() => setScreen("travelAdhkar")}
         onReviewAdhkar={() => { setDay(d => ({ ...d, adhkarIndex: 0 })); setAdhkarReview(true); setScreen("adhkar"); }} />;
     case "adhkar":
       return <Adhkar day={day} setDay={setDay} soundOn={app.settings.soundCounter}
@@ -181,6 +183,9 @@ export default function Page() {
         onDone={() => setScreen("home")} onExit={() => setScreen("home")} />;
     case "iftarAdhkar":
       return <IftarAdhkar day={day} setDay={setDay} soundOn={app.settings.soundCounter}
+        onDone={() => setScreen("home")} onExit={() => setScreen("home")} />;
+    case "travelAdhkar":
+      return <TravelAdhkar day={day} setDay={setDay} soundOn={app.settings.soundCounter}
         onDone={() => setScreen("home")} onExit={() => setScreen("home")} />;
     case "adhkarComplete":
       return <AdhkarComplete onContinue={() => setScreen("routine")} />;

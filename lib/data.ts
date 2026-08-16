@@ -307,6 +307,38 @@ export const QUOTES: Quote[] = [
   { text: "Ne vous détestez pas, ne vous jalousez pas, ne vous tournez pas le dos ; soyez des serviteurs d'Allah, frères entre vous.", arabic: "لَا تَبَاغَضُوا وَلَا تَحَاسَدُوا وَلَا تَدَابَرُوا، وَكُونُوا عِبَادَ اللَّهِ إِخْوَانًا", source: "Hadith rapporté par Al-Bukhari et Muslim" },
 ];
 
+// Douaas du voyage — compilées des hadith authentiques (Bukhari, Muslim, Abu Dawud,
+// At-Tirmidhi, Ahmad). Couvrent toutes les étapes : sortir de chez soi, monter
+// dans le véhicule, montées/descentes, arrivée, halte, retour, protection.
+export const TRAVEL_ADHKAR: AdhkarItem[] = [
+  { id: "travel-sortir", title: "En quittant la maison", repetitions: 1,
+    arabic: "بِسْمِ اللَّهِ، تَوَكَّلْتُ عَلَى اللَّهِ، وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ" },
+  { id: "travel-vehicule", title: "En montant dans le véhicule", repetitions: 1,
+    arabic: "بِسْمِ اللَّهِ، وَالْحَمْدُ لِلَّهِ، سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ، وَإِنَّا إِلَى رَبِّنَا لَمُنقَلِبُونَ" },
+  { id: "travel-dua-voyage", title: "Dua du voyageur", repetitions: 1,
+    arabic: "اللَّهُمَّ إِنَّا نَسْأَلُكَ فِي سَفَرِنَا هَذَا الْبِرَّ وَالتَّقْوَى، وَمِنَ الْعَمَلِ مَا تَرْضَى، اللَّهُمَّ هَوِّنْ عَلَيْنَا سَفَرَنَا هَذَا وَاطْوِ عَنَّا بُعْدَهُ، اللَّهُمَّ أَنْتَ الصَّاحِبُ فِي السَّفَرِ وَالْخَلِيفَةُ فِي الْأَهْلِ، اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ وَعْثَاءِ السَّفَرِ وَكَآبَةِ الْمَنظَرِ وَسُوءِ الْمُنقَلَبِ فِي الْمَالِ وَالْأَهْلِ" },
+  { id: "travel-adieu", title: "Laisser ses proches sous la garde d'Allah", repetitions: 1,
+    arabic: "أَسْتَوْدِعُكُمُ اللَّهَ الَّذِي لَا تَضِيعُ وَدَائِعُهُ" },
+  { id: "travel-montee", title: "En montant (côte, escalier, avion)", repetitions: 3,
+    arabic: "اللَّهُ أَكْبَرُ" },
+  { id: "travel-descente", title: "En descendant (descente, atterrissage)", repetitions: 3,
+    arabic: "سُبْحَانَ اللَّهِ" },
+  { id: "travel-halte", title: "À chaque halte — protection du lieu", repetitions: 1,
+    arabic: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ" },
+  { id: "travel-ville", title: "En arrivant dans une nouvelle ville / un nouveau pays", repetitions: 1,
+    arabic: "اللَّهُمَّ رَبَّ السَّمَاوَاتِ وَمَا أَظْلَلْنَ، وَرَبَّ الْأَرَضِينَ وَمَا أَقْلَلْنَ، وَرَبَّ الشَّيَاطِينِ وَمَا أَضْلَلْنَ، وَرَبَّ الرِّيَاحِ وَمَا ذَرَيْنَ، أَسْأَلُكَ خَيْرَ هَذِهِ الْقَرْيَةِ وَخَيْرَ أَهْلِهَا وَخَيْرَ مَا فِيهَا، وَأَعُوذُ بِكَ مِنْ شَرِّهَا وَشَرِّ أَهْلِهَا وَشَرِّ مَا فِيهَا" },
+  { id: "travel-retour-route", title: "En rentrant — sur la route", repetitions: 1,
+    arabic: "آيِبُونَ تَائِبُونَ عَابِدُونَ لِرَبِّنَا حَامِدُونَ" },
+  { id: "travel-retour-maison", title: "En rentrant chez soi", repetitions: 1,
+    arabic: "تَوْبًا تَوْبًا لِرَبِّنَا أَوْبًا، لَا يُغَادِرُ عَلَيْنَا حَوْبًا" },
+  { id: "travel-protection-nuit", title: "En s'installant pour la nuit en voyage", repetitions: 1,
+    arabic: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ غَضَبِهِ وَعِقَابِهِ وَشَرِّ عِبَادِهِ وَمِنْ هَمَزَاتِ الشَّيَاطِينِ وَأَنْ يَحْضُرُونِ" },
+  { id: "travel-dua-rizq-voyage", title: "Pour le rizq et la facilité en voyage", repetitions: 1,
+    arabic: "اللَّهُمَّ لَا سَهْلَ إِلَّا مَا جَعَلْتَهُ سَهْلًا، وَأَنْتَ تَجْعَلُ الْحَزْنَ إِذَا شِئْتَ سَهْلًا" },
+  { id: "travel-cloture", title: "Clôture — gratitude pour le voyage", repetitions: 1,
+    arabic: "الْحَمْدُ لِلَّهِ الَّذِي سَلَّمَنَا وَأَدَّانَا وَآوَانَا، فَكَمْ مِمَّنْ لَا كَافِيَ لَهُ وَلَا مُؤْوِي" },
+];
+
 export const BADGES = [7, 30, 100, 365];
 
 // Personalized reminders shown on Home, right after the greeting. {name} is

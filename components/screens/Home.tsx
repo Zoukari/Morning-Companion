@@ -1,19 +1,21 @@
 "use client";
 import React from "react";
 import { useEffect, useState } from "react";
-import { Settings as SettingsIcon, Check, ArrowRight, BarChart3, Moon, BookOpen, Star, Sunset, Plane } from "lucide-react";
+import { Settings as SettingsIcon, Check, ArrowRight, BarChart3, Moon, BookOpen, Star, Sunset, Plane, Sparkles, Globe } from "lucide-react";
 import { AppData, DayData } from "@/lib/types";
-import { ADHKAR, EVENING_ADHKAR, QIYAM_ADHKAR, IFTAR_ADHKAR, TRAVEL_ADHKAR, QUOTES, ENCOURAGEMENTS } from "@/lib/data";
+import { ADHKAR, EVENING_ADHKAR, QIYAM_ADHKAR, IFTAR_ADHKAR, TRAVEL_ADHKAR, OCCASIONS_ADHKAR, QUOTES, ENCOURAGEMENTS } from "@/lib/data";
+import { t, Lang } from "@/lib/i18n";
 import { toArabicName } from "@/lib/transliterate";
 import { AtmosphereBackground, ProgressBar, TopBar } from "../ui";
 
 export default function Home({
-  app, day, now, onStart, onOpenDashboard, onOpenSettings, onOpenEveningAdhkar, onOpenQiyamAdhkar, onOpenIftarAdhkar, onOpenTravelAdhkar, onReviewAdhkar,
+  app, day, now, onStart, onOpenDashboard, onOpenSettings, onOpenEveningAdhkar, onOpenQiyamAdhkar, onOpenIftarAdhkar, onOpenTravelAdhkar, onOpenOccasionsAdhkar, onReviewAdhkar, setApp,
 }: {
   app: AppData; day: DayData; now: Date;
   onStart: () => void; onOpenDashboard: () => void; onOpenSettings: () => void;
   onOpenEveningAdhkar: () => void; onOpenQiyamAdhkar: () => void; onOpenIftarAdhkar: () => void;
-  onOpenTravelAdhkar: () => void; onReviewAdhkar: () => void;
+  onOpenTravelAdhkar: () => void; onOpenOccasionsAdhkar: () => void; onReviewAdhkar: () => void;
+  setApp: (updater: (a: AppData) => AppData) => void;
 }) {
   const [quoteIdx, setQuoteIdx] = useState(() => Math.floor(Math.random() * QUOTES.length));
   const [klikFixed, setKlikFixed] = useState(true);
@@ -29,6 +31,8 @@ export default function Home({
   }, []);
   const quote = QUOTES[quoteIdx];
   const arabicName = toArabicName(app.settings.userName);
+  const lang = (app.settings.language || "fr") as Lang;
+  const tr = t(lang);
   const encouragement = ENCOURAGEMENTS[quoteIdx % ENCOURAGEMENTS.length].replace("{name}", app.settings.userName);
   const QUOTE_INTERVAL_MS = 10000;
   const adhkarPct = day.adhkarCompleted ? 100 : Math.round((day.adhkarIndex / ADHKAR.length) * 100);
@@ -192,7 +196,7 @@ export default function Home({
           display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontWeight: 500,
         }}>
           <Plane size={15} color="#38bdf8" />
-          Douaas du voyage (facultatif)
+          {tr.btn_travel}
           {day.travelAdhkarCompleted ? (
             <Check size={13} color="var(--emerald)" />
           ) : (
@@ -200,8 +204,25 @@ export default function Home({
           )}
         </button>
 
+        <button onClick={onOpenOccasionsAdhkar} className="mc-btn" style={{
+          marginTop: 10, width: "100%", padding: "13px", borderRadius: 16, border: "1px solid rgba(167,139,250,0.35)",
+          background: "rgba(167,139,250,0.10)", color: "var(--text)", fontSize: 13, cursor: "pointer",
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontWeight: 500,
+        }}>
+          <Sparkles size={15} color="#a78bfa" />
+          {tr.btn_occasions}
+          {day.occasionsAdhkarCompleted ? (
+            <Check size={13} color="var(--emerald)" />
+          ) : (
+            <span style={{ color: "var(--text-faint)" }}>· {day.occasionsAdhkarIndex}/{OCCASIONS_ADHKAR.length}</span>
+          )}
+        </button>
+
         {!klikFixed && <KlikBadgeWrapper />}
       </div>
+
+      {/* Floating language toggle — bottom right */}
+      <LangToggle lang={lang} onChange={(l) => setApp(a => (a ? { ...a, settings: { ...a.settings, language: l } } : a))} />
 
       {klikFixed && (
         <div style={{
@@ -250,5 +271,29 @@ function KlikBadgeWrapper() {
     <div style={{ display: "flex", justifyContent: "center", marginTop: 28, paddingBottom: 8 }}>
       <KlikBadge />
     </div>
+  );
+}
+
+// Floating language toggle — fixed bottom-right corner
+function LangToggle({ lang, onChange }: { lang: Lang; onChange: (l: Lang) => void }) {
+  const LANGS: Lang[] = ["fr", "en", "ar"];
+  const LABELS: Record<Lang, string> = { fr: "FR", en: "EN", ar: "ع" };
+  const next = LANGS[(LANGS.indexOf(lang) + 1) % LANGS.length];
+  return (
+    <button
+      onClick={() => onChange(next)}
+      style={{
+        position: "fixed", bottom: 72, right: 16, zIndex: 60,
+        width: 40, height: 40, borderRadius: "50%",
+        background: "rgba(10,10,11,0.75)", backdropFilter: "blur(12px)",
+        border: "1px solid rgba(255,255,255,0.18)",
+        color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
+      }}
+      title="Changer de langue"
+    >
+      {LABELS[lang]}
+    </button>
   );
 }

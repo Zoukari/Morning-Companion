@@ -3,19 +3,21 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Settings as SettingsIcon, Check, ArrowRight, BarChart3, Moon, BookOpen, Star, Sunset, Plane, Sparkles, Globe } from "lucide-react";
 import { AppData, DayData } from "@/lib/types";
-import { ADHKAR, EVENING_ADHKAR, QIYAM_ADHKAR, IFTAR_ADHKAR, TRAVEL_ADHKAR, OCCASIONS_ADHKAR, QUOTES, ENCOURAGEMENTS } from "@/lib/data";
+import { ADHKAR, EVENING_ADHKAR, QIYAM_ADHKAR, IFTAR_ADHKAR, TRAVEL_ADHKAR, QUOTES, ENCOURAGEMENTS } from "@/lib/data";
 import { t, Lang } from "@/lib/i18n";
 import { toArabicName } from "@/lib/transliterate";
 import { AtmosphereBackground, ProgressBar, TopBar } from "../ui";
+import PrayerTracker from "../PrayerTracker";
 
 export default function Home({
-  app, day, now, onStart, onOpenDashboard, onOpenSettings, onOpenEveningAdhkar, onOpenQiyamAdhkar, onOpenIftarAdhkar, onOpenTravelAdhkar, onOpenOccasionsAdhkar, onReviewAdhkar, setApp,
+  app, day, now, onStart, onOpenDashboard, onOpenSettings, onOpenEveningAdhkar, onOpenQiyamAdhkar, onOpenIftarAdhkar, onOpenTravelAdhkar, onOpenOccasionsAdhkar, onReviewAdhkar, setApp, setDay,
 }: {
   app: AppData; day: DayData; now: Date;
   onStart: () => void; onOpenDashboard: () => void; onOpenSettings: () => void;
   onOpenEveningAdhkar: () => void; onOpenQiyamAdhkar: () => void; onOpenIftarAdhkar: () => void;
   onOpenTravelAdhkar: () => void; onOpenOccasionsAdhkar: () => void; onReviewAdhkar: () => void;
   setApp: (updater: (a: AppData) => AppData) => void;
+  setDay: (updater: (d: DayData) => DayData) => void;
 }) {
   const [quoteIdx, setQuoteIdx] = useState(() => Math.floor(Math.random() * QUOTES.length));
   const [klikFixed, setKlikFixed] = useState(true);
@@ -90,6 +92,8 @@ export default function Home({
             </div>
           </div>
         </div>
+
+        <PrayerTracker day={day} setDay={setDay} />
 
         <div key={quoteIdx} className="mc-fade-in" style={{
           marginTop: 18, padding: 18, borderRadius: 18,
@@ -211,11 +215,6 @@ export default function Home({
         }}>
           <Sparkles size={15} color="#a78bfa" />
           {tr.btn_occasions}
-          {day.occasionsAdhkarCompleted ? (
-            <Check size={13} color="var(--emerald)" />
-          ) : (
-            <span style={{ color: "var(--text-faint)" }}>· {day.occasionsAdhkarIndex}/{OCCASIONS_ADHKAR.length}</span>
-          )}
         </button>
 
         {!klikFixed && <KlikBadgeWrapper />}

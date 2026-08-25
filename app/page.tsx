@@ -12,10 +12,9 @@ import EveningAdhkar from "@/components/screens/EveningAdhkar";
 import QiyamAdhkar from "@/components/screens/QiyamAdhkar";
 import IftarAdhkar from "@/components/screens/IftarAdhkar";
 import TravelAdhkar from "@/components/screens/TravelAdhkar";
-import OccasionsAdhkar from "@/components/screens/OccasionsAdhkar";
+import OccasionsMenu from "@/components/screens/OccasionsMenu";
 import AdhkarComplete from "@/components/screens/AdhkarComplete";
 import Routine from "@/components/screens/Routine";
-import WeightScreen from "@/components/screens/Weight";
 import Goal from "@/components/screens/Goal";
 import RoutineDone from "@/components/screens/RoutineDone";
 import Reflection from "@/components/screens/Reflection";
@@ -23,7 +22,7 @@ import Dashboard from "@/components/screens/Dashboard";
 import SettingsScreen from "@/components/screens/Settings";
 
 type Screen =
-  | "home" | "adhkar" | "adhkarComplete" | "eveningAdhkar" | "qiyamAdhkar" | "iftarAdhkar" | "travelAdhkar" | "occasionsAdhkar" | "routine" | "weight" | "goal"
+  | "home" | "adhkar" | "adhkarComplete" | "eveningAdhkar" | "qiyamAdhkar" | "iftarAdhkar" | "travelAdhkar" | "occasionsMenu" | "routine" | "goal"
   | "routineDone" | "alreadyDone" | "dashboard" | "reflection" | "settings";
 
 export default function Page() {
@@ -139,10 +138,7 @@ export default function Page() {
       if (a.lastCompletedDate === key) return a;
       const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
       const newStreak = a.lastCompletedDate === yesterday ? a.streak + 1 : 1;
-      const weightHistory = d.weight
-        ? [...a.weightHistory.filter(w => w.date !== key), { date: key, weight: d.weight }].sort((x, y) => x.date.localeCompare(y.date))
-        : a.weightHistory;
-      return { ...a, streak: newStreak, lastCompletedDate: key, totalDaysCompleted: a.totalDaysCompleted + 1, weightHistory };
+      return { ...a, streak: newStreak, lastCompletedDate: key, totalDaysCompleted: a.totalDaysCompleted + 1 };
     });
   }, []);
 
@@ -171,8 +167,8 @@ export default function Page() {
         onOpenQiyamAdhkar={() => setScreen("qiyamAdhkar")}
         onOpenIftarAdhkar={() => setScreen("iftarAdhkar")}
         onOpenTravelAdhkar={() => setScreen("travelAdhkar")}
-        onOpenOccasionsAdhkar={() => setScreen("occasionsAdhkar")}
-        onReviewAdhkar={() => { setDay(d => ({ ...d, adhkarIndex: 0 })); setAdhkarReview(true); setScreen("adhkar"); }} setApp={setApp as any} />;
+        onOpenOccasionsAdhkar={() => setScreen("occasionsMenu")}
+        onReviewAdhkar={() => { setDay(d => ({ ...d, adhkarIndex: 0 })); setAdhkarReview(true); setScreen("adhkar"); }} setApp={setApp as any} setDay={setDay} />;
     case "adhkar":
       return <Adhkar day={day} setDay={setDay} soundOn={app.settings.soundCounter}
         onDone={() => { if (adhkarReview) { setAdhkarReview(false); setScreen("home"); } else setScreen("adhkarComplete"); }}
@@ -189,17 +185,14 @@ export default function Page() {
     case "travelAdhkar":
       return <TravelAdhkar day={day} setDay={setDay} soundOn={app.settings.soundCounter}
         onDone={() => setScreen("home")} onExit={() => setScreen("home")} />;
-    case "occasionsAdhkar":
-      return <OccasionsAdhkar day={day} setDay={setDay} soundOn={app.settings.soundCounter}
-        onDone={() => setScreen("home")} onExit={() => setScreen("home")} />;
+    case "occasionsMenu":
+      return <OccasionsMenu onExit={() => setScreen("home")} />;
     case "adhkarComplete":
       return <AdhkarComplete onContinue={() => setScreen("routine")} />;
     case "routine":
       return <Routine day={day} setDay={setDay} onExit={() => setScreen("home")}
-        onDone={() => { setDay(d => ({ ...d, routineCompleted: true })); setScreen("weight"); }} />;
-    case "weight":
-      return <WeightScreen app={app} day={day} setDay={setDay} onExit={() => setScreen("home")}
-        onNext={() => setScreen("goal")} />;
+        onDone={() => { setDay(d => ({ ...d, routineCompleted: true })); setScreen("goal"); }} />;
+    
     case "goal":
       return <Goal day={day} setDay={setDay} onExit={() => setScreen("home")}
         onNext={() => { finalizeDayIfDone(); setScreen("routineDone"); }} />;
@@ -208,7 +201,7 @@ export default function Page() {
     case "alreadyDone":
       return <RoutineDone showConfetti={false} onContinue={() => setScreen("home")} />;
     case "dashboard":
-      return <Dashboard app={app} setApp={setApp as any} onExit={() => setScreen("home")} onReflection={() => setScreen("reflection")} />;
+      return <Dashboard app={app} onExit={() => setScreen("home")} onReflection={() => setScreen("reflection")} />;
     case "reflection":
       return <Reflection day={day} setDay={setDay} onExit={() => setScreen("dashboard")} />;
     case "settings":

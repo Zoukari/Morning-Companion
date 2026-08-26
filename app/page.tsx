@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { AppData, DayData, defaultDay, resetAdhkarOnly, todayKey } from "@/lib/types";
+import { AppData, DayData, defaultApp, defaultDay, resetAdhkarOnly, todayKey, isDayComplete } from "@/lib/types";
 import { loadAppData, saveAppData } from "@/lib/storage";
 import { detectTimeZone, syncReminderState } from "@/lib/push";
 
@@ -134,7 +134,7 @@ export default function Page() {
       if (!a) return a;
       const key = todayKey();
       const d = a.days[key];
-      if (!d.adhkarCompleted || !d.routineCompleted) return a;
+      if (!isDayComplete(d)) return a;   // adhkar + au moins 3 prières
       if (a.lastCompletedDate === key) return a;
       const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
       const newStreak = a.lastCompletedDate === yesterday ? a.streak + 1 : 1;

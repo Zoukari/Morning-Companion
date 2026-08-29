@@ -169,7 +169,7 @@ export default function SettingsScreen({
           Mode hors ligne · toutes les données restent sur cet appareil (IndexedDB).
         </div>
         <div style={{ fontSize: 11, color: "var(--text-faint)", padding: "0 4px 20px", textAlign: "center" }}>
-          Allah First · version <strong style={{ color: "var(--text-dim)" }}>2026-07-23-v6</strong>
+          Allah First · version <strong style={{ color: "var(--text-dim)" }}>2026-07-23-v9</strong>
         </div>
       </div>
     </div>

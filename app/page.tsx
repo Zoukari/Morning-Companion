@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { AppData, DayData, defaultApp, defaultDay, resetAdhkarOnly, todayKey, isDayComplete } from "@/lib/types";
+import { AppData, DayData, defaultApp, defaultDay, resetAdhkarOnly, todayKey, isDayComplete, levelForStreak, levelPenaltyForMissedDays, recalculateFromHistory } from "@/lib/types";
 import { loadAppData, saveAppData } from "@/lib/storage";
 import { detectTimeZone, syncReminderState } from "@/lib/push";
 
@@ -129,17 +129,50 @@ export default function Page() {
     });
   }, []);
 
+  // Édition d'un jour passé (calendrier) → recalcul complet du streak/niveau
+  const setDayForDate = useCallback((date: string, updater: (d: DayData) => DayData) => {
+    setApp(a => {
+      if (!a) return a;
+      const current = a.days[date] || defaultDay();
+      const updated = { ...a.days, [date]: updater(current) };
+      const { streak, lastCompletedDate, totalDaysCompleted } = recalculateFromHistory(updated);
+      const newLevel = Math.min(10, levelForStreak(streak));
+      return { ...a, days: updated, streak, lastCompletedDate, totalDaysCompleted, level: newLevel };
+    });
+  }, []);
+
   const finalizeDayIfDone = useCallback(() => {
     setApp(a => {
       if (!a) return a;
       const key = todayKey();
       const d = a.days[key];
-      if (!isDayComplete(d)) return a;   // adhkar + au moins 3 prières
+      if (!isDayComplete(d)) return a;
       if (a.lastCompletedDate === key) return a;
       const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
       const newStreak = a.lastCompletedDate === yesterday ? a.streak + 1 : 1;
-      return { ...a, streak: newStreak, lastCompletedDate: key, totalDaysCompleted: a.totalDaysCompleted + 1 };
+      // Le niveau monte d'un cran par jour accompli (ne dépasse pas le max du streak)
+      const maxForStreak = levelForStreak(newStreak);
+      const newLevel = Math.min(maxForStreak, (a.level ?? 0) + 1);
+      return { ...a, streak: newStreak, lastCompletedDate: key, totalDaysCompleted: a.totalDaysCompleted + 1, level: newLevel };
     });
+  }, []);
+
+  // Au chargement : pénaliser le niveau si des jours ont été manqués
+  useEffect(() => {
+    if (!app) return;
+    setApp(a => {
+      if (!a || !a.lastCompletedDate) return a;
+      const today = todayKey();
+      const last = new Date(a.lastCompletedDate);
+      const now = new Date(today);
+      const missedDays = Math.round((now.getTime() - last.getTime()) / 86400000) - 1;
+      if (missedDays <= 0) return a;
+      const penalty = levelPenaltyForMissedDays(missedDays);
+      const newLevel = penalty >= 99 ? 0 : Math.max(0, (a.level ?? 0) - penalty);
+      if (newLevel === a.level) return a;
+      return { ...a, level: newLevel };
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const resetTodayAdhkar = useCallback(() => {
@@ -201,7 +234,7 @@ export default function Page() {
     case "alreadyDone":
       return <RoutineDone showConfetti={false} onContinue={() => setScreen("home")} />;
     case "dashboard":
-      return <Dashboard app={app} onExit={() => setScreen("home")} onReflection={() => setScreen("reflection")} />;
+      return <Dashboard app={app} setDayForDate={setDayForDate} onExit={() => setScreen("home")} onReflection={() => setScreen("reflection")} />;
     case "reflection":
       return <Reflection day={day} setDay={setDay} onExit={() => setScreen("dashboard")} />;
     case "settings":

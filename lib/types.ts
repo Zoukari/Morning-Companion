@@ -131,3 +131,50 @@ export function isDayComplete(day: DayData): boolean {
   const prayedCount = Object.values(day.prayers ?? {}).filter(p => p !== "none").length;
   return day.adhkarCompleted && prayedCount >= 3;
 }
+
+/** Recalcule streak, lastCompletedDate et totalDaysCompleted depuis l'historique complet.
+ *  Utilisé quand on édite un jour passé. */
+export function recalculateFromHistory(days: Record<string, DayData>): {
+  streak: number; lastCompletedDate: string | null; totalDaysCompleted: number;
+} {
+  const today = todayKey();
+  let totalDaysCompleted = 0;
+  for (const day of Object.values(days)) {
+    if (isDayComplete(day)) totalDaysCompleted++;
+  }
+
+  // Streak = jours consécutifs en remontant depuis aujourd'hui (ou hier si aujourd'hui incomplet)
+  let streak = 0;
+  const todayComplete = isDayComplete(days[today] ?? defaultDay());
+  const startOffset = todayComplete ? 0 : 1;
+
+  for (let i = startOffset; i < 730; i++) {
+    const d = new Date(Date.now() - 86400000 * i);
+    const key = d.toISOString().slice(0, 10);
+    if (days[key] && isDayComplete(days[key])) streak++;
+    else break;
+  }
+
+  // lastCompletedDate = dernier jour complet
+  let lastCompletedDate: string | null = null;
+  for (let i = 0; i < 730; i++) {
+    const key = new Date(Date.now() - 86400000 * i).toISOString().slice(0, 10);
+    if (days[key] && isDayComplete(days[key])) { lastCompletedDate = key; break; }
+  }
+
+  return { streak, lastCompletedDate, totalDaysCompleted };
+}
+
+/** Calcule la pénalité de niveau selon les jours manqués depuis lastCompletedDate.
+ *  1 jour manqué : grâce (0 pénalité)
+ *  2 jours       : -1 niveau
+ *  3 jours       : -2 niveaux
+ *  4-6 jours     : -3 niveaux
+ *  7+ jours      : retour à 0               */
+export function levelPenaltyForMissedDays(missedDays: number): number {
+  if (missedDays <= 1) return 0;
+  if (missedDays === 2) return 1;
+  if (missedDays === 3) return 2;
+  if (missedDays <= 6) return 3;
+  return 99; // réinitialisation
+}

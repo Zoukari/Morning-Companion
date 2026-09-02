@@ -23,6 +23,8 @@ const TOPIC_META: Record<string, { emoji: string; label: string; color: string; 
   voyage:       { emoji: "✈️", label: "Voyage",        color: "#2563eb", bg: "rgba(37,99,235,0.12)" },
   quotidien:    { emoji: "⭐", label: "Quotidien",     color: "#eab308", bg: "rgba(234,179,8,0.12)" },
   hajj:         { emoji: "🕋", label: "Hajj / Omra",  color: "#92400e", bg: "rgba(146,64,14,0.12)" },
+  wudu:         { emoji: "🚿", label: "Ablutions",    color: "#38bdf8", bg: "rgba(56,189,248,0.12)" },
+  "apres-salat": { emoji: "🙏", label: "Après prière", color: "#10b981", bg: "rgba(16,185,129,0.12)" },
 };
 const FALLBACK = { emoji: "🤲", label: "Autre", color: "#6b7280", bg: "rgba(107,114,128,0.12)" };
 

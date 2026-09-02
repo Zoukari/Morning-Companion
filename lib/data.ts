@@ -54,9 +54,9 @@ export const ADHKAR: AdhkarItem[] = [
     arabic: "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي" },
   { id: "radeetu", title: "Radeetu billahi Rabb", repetitions: 3,
     arabic: "رَضِيتُ بِاللَّهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ ﷺ نَبِيًّا وَرَسُولًا" },
-  { id: "laila-100", title: "La ilaha illallah wahdahu × 100", repetitions: 100, isCounter: true,
+  { id: "laila-10", title: "La ilaha illallah wahdahu × 10", repetitions: 10, isCounter: true,
     arabic: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ" },
-  { id: "subhan-10", title: "Subhanallahi wa bihamdih × 10", repetitions: 10, isCounter: true,
+  { id: "subhan-100", title: "Subhanallahi wa bihamdih × 100", repetitions: 100, isCounter: true,
     arabic: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ" },
 ];
 
